@@ -40,7 +40,8 @@ class Tree(Plant):
         self.trunk_diameter = trunk_diameter
 
     def produce_shade(self):
-        print(f"{self.name} provides {(self.height*0.156)} square meters of shade")
+        print(f"{self.name} provides {(self.height*0.156)} "
+              "square meters of shade")
 
     def get_info(self):
         print(f"{self.name} (Tree): {self.height}cm, "
