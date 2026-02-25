@@ -30,53 +30,63 @@ class Flower(Plant):
     def get_info(self):
         print(f"{self.name} (Flower): {self.height}cm, "
               f"{self.age} days, {self.color} color")
+        self.bloom()
 
 
 class Tree(Plant):
-    def __init__(self, name: str, height: int, age: int, trunk_diameter: int):
+    def __init__(self, name: str, height: int, age: int,
+                 trunk_diameter: int, shade: int):
         super().__init__(name)
         self.set_height(height)
         self.set_age(age)
         self.trunk_diameter = trunk_diameter
+        self.shade = shade
 
     def produce_shade(self):
-        print(f"{self.name} provides {(self.height*0.156)} "
+        print(f"{self.name} provides {(self.shade)} "
               "square meters of shade")
 
     def get_info(self):
         print(f"{self.name} (Tree): {self.height}cm, "
               f"{self.age} days, {self.trunk_diameter}cm diameter")
+        self.produce_shade()
 
 
 class Vegetable(Plant):
-    def __init__(self, name: str, height: int, age: int, harvest_season: str):
+    def __init__(self, name: str, height: int, age: int,
+                 harvest_season: str, nutritional_value: str):
         super().__init__(name)
         self.set_height(height)
         self.set_age(age)
         self.harvest_season = harvest_season
-
-    def nutritional_value(self, vitamin):
-        print(f"{self.name} is rich in vitamin {vitamin}")
+        self.nutritional_value = nutritional_value
 
     def get_info(self):
         print(f"{self.name} (Vegetable): {self.height}cm, "
               f"{self.age} days, {self.harvest_season} harvest")
+        print(f"{self.name} is rich in vitamin {self.nutritional_value}")
 
 
 def ft_plant_types():
     Flower1 = Flower("rose", 25, 30, "red")
+    Flower2 = Flower("Sunflower", 80, 45, "yellow")
     Flower1.get_info()
-    Flower1.bloom()
+    print("")
+    Flower2.get_info()
     print("")
 
-    Tree1 = Tree("oak", 500, 1825, 50)
+    Tree1 = Tree("oak", 500, 1825, 50, 78)
+    Tree2 = Tree("pine", 220, 1000, 25, 110)
     Tree1.get_info()
-    Tree1.produce_shade()
+    print("")
+    Tree2.get_info()
     print("")
 
-    Veg1 = Vegetable("tomato", 80, 90, "summer")
+    Veg1 = Vegetable("tomato", 80, 90, "summer", "c")
+    Veg2 = Vegetable("broccoli", 10, 30, "winter", "k and c")
     Veg1.get_info()
-    Veg1.nutritional_value("c")
+    print("")
+    Veg2.get_info()
 
 
 if __name__ == "__main__":
