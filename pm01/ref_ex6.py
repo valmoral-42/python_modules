@@ -22,7 +22,7 @@ class Plant:
         Plant.all_growth += growth
         print(f"{self.name} grew {growth}cm")
 
-    def description(self) -> None:
+    def get_info(self) -> None:
         print(f"- {self.name}: {self.height}cm")
 
 
@@ -36,7 +36,7 @@ class Flower(Plant):
         super().__init__(name, height)
         self.color = color
 
-    def description(self) -> None:
+    def get_info(self) -> None:
         print(f"- {self.name}: {self.height}cm, {self.color} "
               "flowers (blooming)")
 
@@ -46,7 +46,7 @@ class PrizeFlower(Flower):
         super().__init__(name, height, color)
         self.points = points
 
-    def description(self) -> None:
+    def get_info(self) -> None:
         print(
             f"- {self.name}: {self.height}cm, {self.color}  "
             f"flowers (blooming), Prize points: {self.points}"
@@ -74,7 +74,7 @@ class Garden:
         print(f"=== {self.owner}'s Garden Report ===")
         print("Plants in garden:")
         for plant in self.plants:
-            plant.description()
+            plant.get_info()
 
 
 def count_exact_type(plants: list[Plant], class_name: str) -> int:
