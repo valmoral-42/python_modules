@@ -55,6 +55,7 @@ class Garden:
         self.owner = owner
         self.plants: list[Plant] = []
         self.plant_count = 0
+        self.local_growth = 0
 
     def add_plant(self, plant: Plant, printable: bool = True):
         self.plants.append(plant)
@@ -64,6 +65,13 @@ class Garden:
 
     def help_grow(self):
         print(f"{self.owner} is helping all plants grow...")
+
+    def grow_plant(self, plant: Plant, growth: int):
+        if plant not in self.plants:
+            return
+        before = plant.height
+        plant.grow_plant(growth)
+        self.local_growth += max(0, plant.height - before)
 
     def report(self) -> None:
         print(f"=== {self.owner}'s Garden Report ===")
@@ -112,6 +120,8 @@ class GardenManager:
             prize_count = GardenManager.count_type(garden.plants, "PrizeFlwr")
 
             return {
+                "plants_in_garden": garden.plant_count,
+                "local_growth": garden.local_growth,
                 "tree_count": tree_count,
                 "flower_count": flower_count,
                 "prize_count": prize_count,
@@ -151,9 +161,9 @@ def ft_garden_analytics():
     print("")
 
     alice_garden.help_grow()
-    oak.grow_plant(2)
-    rose.grow_plant(1)
-    sunflower.grow_plant(3)
+    alice_garden.grow_plant(oak, 2)
+    alice_garden.grow_plant(rose, 1)
+    alice_garden.grow_plant(sunflower, 3)
     print("")
 
     print("=== Alice's Garden Report ===")
@@ -165,8 +175,8 @@ def ft_garden_analytics():
 
     alice_stats = GardenManager.GardenStats.garden_status(manager, "Alice")
 
-    print(f"Plants added: {Plant.plant_counter}, "
-          f"Total growth: {Plant.all_growth}cm")
+    print(f"Plants added: {alice_stats['plants_in_garden']}, "
+          f"Total growth: {alice_stats['local_growth']}cm")
     print(f"Plant types: {alice_stats['tree_count']} regular, "
           f"{alice_stats['flower_count']} flowering, "
           f"{alice_stats['prize_count']} prize flowers")
