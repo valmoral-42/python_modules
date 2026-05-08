@@ -29,6 +29,8 @@ def test_ft_exercise(exercise_file_name):
     try:
         # Import your exercise file
         # This is like doing: import ft_plot_area
+        import sys
+        sys.path.append(".")
         ft_module = __import__(exercise_file_name)
 
         # Get the function from your file
@@ -65,20 +67,19 @@ def test_ft_exercise(exercise_file_name):
 
     except TypeError as error:
         msg = str(error)
-        if "missing" in msg and "required positional argument" in msg:
-
-            print(f"❌ Function signature error: {error}")
-            print(
-                """   For exercise 7, make sure your
-                function takes parameters:"""
-            )
-            print(
-                f"   def {exercise_file_name}"
-                "(seed_type: str, quantity: int, unit: str) -> None:"
-            )
+        print(f"❌ Type error: {error}")
+        if exercise_file_name == "ft_seed_inventory":
+            if "missing" in msg and "required positional argument" in msg:
+                print(
+                    """   For exercise 7, make sure your
+                    function takes parameters:"""
+                )
+                print(
+                    f"   def {exercise_file_name}"
+                    "(seed_type: str, quantity: int, unit: str) -> None:"
+                )
         else:
-            print(f"❌ Type error: {error}")
-            print("   Check your function parameters and types")
+            print("   Your function should not take any parameters")
 
     except Exception as error:
         print(f"❌ Error running your function: {error}")
@@ -92,13 +93,13 @@ def main():
     print("\nWhich exercise would you like to test?")
     print()
     print("0 - ft_hello_garden     (Say hello to the garden community)")
-    print("1 - ft_plot_area        (Calculate garden plot area)")
-    print("2 - ft_harvest_total    (Add up harvest weights)")
-    print("3 - ft_plant_age        (Check if plant is ready)")
-    print("4 - ft_water_reminder   (Check if plants need water)")
-    print("5 - ft_count_harvest    (Count days to harvest)")
-    print("6 - ft_garden_summary   (Display garden info)")
-    print("7 - ft_seed_inventory    (Seed inventory with type hints)")
+    print("1 - ft_garden_name      (Display garden name)")
+    print("2 - ft_plot_area        (Calculate garden plot area)")
+    print("3 - ft_harvest_total    (Add up harvest weights)")
+    print("4 - ft_plant_age        (Check if plant is ready)")
+    print("5 - ft_water_reminder   (Check if plants need water)")
+    print("6 - ft_count_harvest    (Count days to harvest)")
+    print("7 - ft_seed_inventory   (Seed inventory with type hints)")
     print("a - test all exercises")
     print()
 
@@ -108,30 +109,30 @@ def main():
     if choice == "0":
         test_ft_exercise("ft_hello_garden")
     elif choice == "1":
-        test_ft_exercise("ft_plot_area")
+        test_ft_exercise("ft_garden_name")
     elif choice == "2":
-        test_ft_exercise("ft_harvest_total")
+        test_ft_exercise("ft_plot_area")
     elif choice == "3":
-        test_ft_exercise("ft_plant_age")
+        test_ft_exercise("ft_harvest_total")
     elif choice == "4":
-        test_ft_exercise("ft_water_reminder")
+        test_ft_exercise("ft_plant_age")
     elif choice == "5":
+        test_ft_exercise("ft_water_reminder")
+    elif choice == "6":
         test_ft_exercise("ft_count_harvest_iterative")
         test_ft_exercise("ft_count_harvest_recursive")
-    elif choice == "6":
-        test_ft_exercise("ft_garden_summary")
     elif choice == "7":
         test_ft_exercise("ft_seed_inventory")
     elif choice == "a":
         # Test all exercises one by one
         test_ft_exercise("ft_hello_garden")
+        test_ft_exercise("ft_garden_name")
         test_ft_exercise("ft_plot_area")
         test_ft_exercise("ft_harvest_total")
         test_ft_exercise("ft_plant_age")
         test_ft_exercise("ft_water_reminder")
         test_ft_exercise("ft_count_harvest_iterative")
         test_ft_exercise("ft_count_harvest_recursive")
-        test_ft_exercise("ft_garden_summary")
         test_ft_exercise("ft_seed_inventory")
     else:
         print("❌ Invalid choice! Please enter 0, 1, 2, 3, 4, 5, 6, 7, or a")
