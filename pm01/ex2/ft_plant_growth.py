@@ -1,47 +1,34 @@
 class Plant:
-    def __init__(self, name: str, height: int, age: int):
+    def __init__(self, name: str, height: float, age: int, growth_rate: float):
         self.name = name.capitalize()
         self.height = height
         self.age = age
+        self.growth_rate = growth_rate
 
-    def grow_plant(self, growth: int):
-        self.height += growth
+    def grow_plant(self):
+        self.height += self.growth_rate
 
-    def age_plant(self, days: int):
-        self.age += days
+    def age_plant(self):
+        self.age += 1
 
-    def get_info(plant):
-        print(f"{plant.name}: {plant.height}cm, {plant.age} days old")
+    def show(self):
+        print(f"{self.name}: {self.height:.1f}cm, {self.age} days old")
 
+def ft_garden_data():
+        p1 = Plant("Rose", 25.0, 30, 0.8)
+        garden = [p1]
+        i = 1
 
-def ft_plant_growth():
-    Plant1 = Plant("Rose", 25, 30)
-    Plant2 = Plant("Sunflower", 80, 45)
-    Plant3 = Plant("Cactus", 15, 120)
-    i = 1
-
-    print("=== Day 1 ===")
-    Plant1.get_info()
-    Plant2.get_info()
-    Plant3.get_info()
-
-    while i < 7:
-        Plant1.grow_plant(2)
-        Plant1.age_plant(1)
-        Plant2.grow_plant(1)
-        Plant2.age_plant(1)
-        Plant3.grow_plant(3)
-        Plant3.age_plant(1)
-        i += 1
-
-    print(f"=== Day {i} ===")
-    Plant1.get_info()
-    print("Growth this week: 12cm")
-    Plant2.get_info()
-    print("Growth this week: 6cm")
-    Plant3.get_info()
-    print("Growth this week: 18cm")
+        for plant in garden:
+            plant.show()
+            while (i <= 7):
+                 print(f"=== Day {i} ===")
+                 plant.grow_plant()
+                 plant.age_plant()
+                 plant.show()
+                 i += 1
 
 
 if __name__ == "__main__":
-    ft_plant_growth()
+    print("=== Garden Plant Growth ===")
+    ft_garden_data()
