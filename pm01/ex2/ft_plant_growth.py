@@ -27,7 +27,7 @@ def ft_garden_data():
                  plant.age_plant()
                  plant.show()
                  i += 1
-
+            print(f"Growth this week: {(plant.growth_rate*(i - 1)):.1f}cm")
 
 if __name__ == "__main__":
     print("=== Garden Plant Growth ===")
