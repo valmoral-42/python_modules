@@ -5,7 +5,8 @@ class Plant:
         self.age = age
 
     def show(self):
-        print(f"Created: {self.name}: {self.height:.1f}cm, {self.age} days old")
+        print(f"Created: {self.name}: {self.height:.1f}cm, "
+              f"{self.age} days old")
 
 
 def ft_plant_factory():

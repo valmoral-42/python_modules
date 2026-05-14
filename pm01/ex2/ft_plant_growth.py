@@ -14,20 +14,22 @@ class Plant:
     def show(self):
         print(f"{self.name}: {self.height:.1f}cm, {self.age} days old")
 
-def ft_garden_data():
-        p1 = Plant("Rose", 25.0, 30, 0.8)
-        garden = [p1]
-        i = 1
 
-        for plant in garden:
+def ft_garden_data():
+    p1 = Plant("Rose", 25.0, 30, 0.8)
+    garden = [p1]
+    i = 1
+
+    for plant in garden:
+        plant.show()
+        while (i <= 7):
+            print(f"=== Day {i} ===")
+            plant.grow_plant()
+            plant.age_plant()
             plant.show()
-            while (i <= 7):
-                 print(f"=== Day {i} ===")
-                 plant.grow_plant()
-                 plant.age_plant()
-                 plant.show()
-                 i += 1
-            print(f"Growth this week: {(plant.growth_rate*(i - 1)):.1f}cm")
+            i += 1
+        print(f"Growth this week: {(plant.growth_rate*(i - 1)):.1f}cm")
+
 
 if __name__ == "__main__":
     print("=== Garden Plant Growth ===")

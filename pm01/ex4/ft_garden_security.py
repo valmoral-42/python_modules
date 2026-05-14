@@ -3,7 +3,8 @@ class Plant:
         self.name = name.capitalize()
         self.height = height
         self.age = age
-        print(f"Plant created: {self.name}: {self.height:.1f}cm, {self.age} days old")
+        print(f"Plant created: {self.name}: {self.height:.1f}cm, "
+              f"{self.age} days old")
 
     def set_height(self, height: float):
         if height < 0:
@@ -24,7 +25,8 @@ class Plant:
             print(f"Age updated: {self.age} days")
 
     def show(self):
-        print(f"Current state: {self.name}: {self.height:.1f}cm, {self.age} days")
+        print(f"Current state: {self.name}: {self.height:.1f}cm, "
+              f"{self.age} days")
 
 
 def ft_garden_security():

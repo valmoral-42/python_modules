@@ -37,20 +37,21 @@ class Flower(Plant):
         super().show()
         print(f"Color: {self.color}")
         if self._blooming:
-            print("Rose is blooming beautifully!")
+            print(f"{self.name} is blooming beautifully!")
         else:
-            print("Rose has not bloomed yet")
+            print(f"{self.name} has not bloomed yet")
 
 
 class Tree(Plant):
-    def __init__(self, name: str, height: float, age: int, trunk_diameter: float):
+    def __init__(self, name: str, height: float, age: int,
+                 trunk_diameter: float):
         super().__init__(name, height, age)
         self.trunk_diameter = trunk_diameter
 
     def produce_shade(self):
         print(f"[asking the {self.name} to produce shade]")
-        print(f"Tree {self.name} now produces a shade of {(self.height):.1f}cm long "
-              f"and {self.trunk_diameter:.1f}cm wide")
+        print(f"Tree {self.name} now produces a shade of {(self.height):.1f}cm"
+              f" long and {self.trunk_diameter:.1f}cm wide")
 
     def show(self):
         super().show()
@@ -70,6 +71,7 @@ class Vegetable(Plant):
         self.height = self.height + (days * growth_rate)
         print(f"[make {self.name} grow and age for {days} days]")
         self.show()
+
     def show(self):
         super().show()
         print(f"Harvest season: {self.harvest_season}")
@@ -82,7 +84,7 @@ def ft_plant_types():
     f1.show()
     f1.bloom()
     print("")
-    
+
     print("=== Tree")
     t1 = Tree("oak", 200, 365, 5)
     t1.show()
