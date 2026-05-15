@@ -1,15 +1,15 @@
 class Plant:
-    def __init__(self, name: str, height: float, age: int):
+    def __init__(self, name: str, height: float, age: int) -> None:
         self.name = name.capitalize()
         self.height = height
         self.age = age
 
-    def show(self):
+    def show(self) -> None:
         print(f"Created: {self.name}: {self.height:.1f}cm, "
               f"{self.age} days old")
 
 
-def ft_plant_factory():
+def ft_plant_factory() -> None:
     p1 = Plant("rose", 25, 30)
     p2 = Plant("Sunflower", 80, 45)
     p3 = Plant("Cactus", 15, 120)

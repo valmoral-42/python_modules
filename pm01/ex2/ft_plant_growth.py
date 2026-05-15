@@ -1,21 +1,22 @@
 class Plant:
-    def __init__(self, name: str, height: float, age: int, growth_rate: float):
+    def __init__(self, name: str, height: float, age: int,
+                 growth_rate: float) -> None:
         self.name = name.capitalize()
         self.height = height
         self.age = age
         self.growth_rate = growth_rate
 
-    def grow_plant(self):
+    def grow_plant(self) -> None:
         self.height += self.growth_rate
 
-    def age_plant(self):
+    def age_plant(self) -> None:
         self.age += 1
 
-    def show(self):
+    def show(self) -> None:
         print(f"{self.name}: {self.height:.1f}cm, {self.age} days old")
 
 
-def ft_garden_data():
+def ft_garden_data() -> None:
     p1 = Plant("Rose", 25.0, 30, 0.8)
     garden = [p1]
     i = 1
