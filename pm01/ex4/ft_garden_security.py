@@ -1,10 +1,10 @@
 class Plant:
     def __init__(self, name: str, height: float, age: int) -> None:
         self.name = name.capitalize()
-        self.height = height
-        self.age = age
-        print(f"Plant created: {self.name}: {self.height:.1f}cm, "
-              f"{self.age} days old")
+        self._height = height
+        self._age = age
+        print(f"Plant created: {self.name}: {self._height:.1f}cm, "
+              f"{self._age} days old")
 
     def set_height(self, height: float) -> None:
         if height < 0:
@@ -12,8 +12,8 @@ class Plant:
             print("Height update rejected")
             return
         else:
-            self.height = height
-            print(f"Height updated: {self.height}cm")
+            self._height = height
+            print(f"Height updated: {self._height}cm")
 
     def set_age(self, age: int) -> None:
         if age < 0:
@@ -21,12 +21,12 @@ class Plant:
             print("Age update rejected")
             return
         else:
-            self.age = age
-            print(f"Age updated: {self.age} days")
+            self._age = age
+            print(f"Age updated: {self._age} days")
 
     def show(self) -> None:
-        print(f"Current state: {self.name}: {self.height:.1f}cm, "
-              f"{self.age} days")
+        print(f"Current state: {self.name}: {self._height:.1f}cm, "
+              f"{self._age} days")
 
 
 def ft_garden_security() -> None:

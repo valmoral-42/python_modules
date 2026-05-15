@@ -1,8 +1,8 @@
 class Plant:
     def __init__(self, name: str, height: float, age: int) -> None:
         self.name = name.capitalize()
-        self.height = height
-        self.age = age
+        self._height = height
+        self._age = age
         self._stats = Plant.Stats()
 
     @staticmethod
@@ -14,15 +14,15 @@ class Plant:
         return a("Unknown plant", 0, 0)
 
     def grow_plant(self, growth_height: float) -> None:
-        self.height = self.height + growth_height
+        self._height = self._height + growth_height
         self._stats._grow_i += 1
 
     def age_plant(self, growth_days: int) -> None:
-        self.age = self.age + growth_days
+        self._age = self._age + growth_days
         self._stats._age_i += 1
 
     def show(self) -> None:
-        print(f"{self.name}: {self.height:.1f}cm, {self.age} days old")
+        print(f"{self.name}: {self._height:.1f}cm, {self._age} days old")
         self._stats._show_i += 1
 
     class Stats:
@@ -64,8 +64,8 @@ class Tree(Plant):
 
     def produce_shade(self) -> None:
         print(f"[asking the {self.name} to produce shade]")
-        print(f"Tree {self.name} now produces a shade of {(self.height):.1f}cm"
-              f" long and {self.trunk_diameter:.1f}cm wide")
+        print(f"Tree {self.name} now produces a shade of {(self._height):.1f}"
+              f"cm long and {self.trunk_diameter:.1f}cm wide")
         self._stats._shade_i += 1
 
     def show(self) -> None:
