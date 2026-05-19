@@ -1,5 +1,5 @@
 class PlantError(Exception):
-    def __init__(self, default="Unknown plant error") -> None:
+    def __init__(self, default: str = "Unknown plant error") -> None:
         super().__init__(default)
 
 
@@ -10,7 +10,7 @@ def water_plant(plant_name: str) -> None:
         raise PlantError(f"Invalid plant name to water: '{plant_name}'")
 
 
-def finally_block(plants: list) -> None:
+def finally_block(plants: list[str]) -> None:
     print("Opening watering system")
     try:
         for plant in plants:

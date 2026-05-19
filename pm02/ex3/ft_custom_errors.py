@@ -1,15 +1,15 @@
 class GardenError(Exception):
-    def __init__(self, default="Unknown error") -> None:
+    def __init__(self, default: str = "Unknown error") -> None:
         super().__init__(default)
 
 
 class PlantError(GardenError):
-    def __init__(self, default="Unknown plant error") -> None:
+    def __init__(self, default: str = "Unknown plant error") -> None:
         super().__init__(default)
 
 
 class WaterError(GardenError):
-    def __init__(self, default="Unknown garden error") -> None:
+    def __init__(self, default: str = "Unknown garden error") -> None:
         super().__init__(default)
 
 
