@@ -5,13 +5,12 @@ def command() -> None:
     argc = len(sys.argv)
     i = 0
     print(f"Program name: {sys.argv[0]}")
-    if len == 1:
+    if argc == 1:
         print("No arguments provided!")
     else:
         print(f"Arguments received {argc - 1}")
-        for i < argc:
+        for i in range(1, argc):
             print(f"Argument {i}: {sys.argv[i]}")
-            i =+ 1
     print(f"Total arguments: {argc}")
 
 
