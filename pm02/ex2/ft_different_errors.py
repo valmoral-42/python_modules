@@ -19,8 +19,13 @@ def test_error_types() -> None:
         try:
             garden_operations(num)
             print("Operation completed successfully")
-        except (ValueError, ZeroDivisionError, FileNotFoundError,
-                TypeError) as e:
+        except (ValueError) as e:
+            print(f"Caught {type(e).__name__}: {e}")
+        except ZeroDivisionError as e:
+            print(f"Caught {type(e).__name__}: {e}")
+        except FileNotFoundError as e:
+            print(f"Caught {type(e).__name__}: {e}")
+        except TypeError as e:
             print(f"Caught {type(e).__name__}: {e}")
     print("")
     print("All error types tested successfully!")
