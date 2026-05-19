@@ -20,7 +20,6 @@ def test_watering_system(plants: list[str]) -> None:
         print(".. ending tests and returning to main")
     finally:
         print("Closing watering systems")
-    print("Cleanup always happens, even with errors!")
 
 
 def finally_block() -> None:
@@ -28,12 +27,14 @@ def finally_block() -> None:
     invalid_plants = ["Tomato", "lettuce", "Carrots"]
 
     print("Testing valid plants...")
-    finally_block(valid_plants)
+    test_watering_system(valid_plants)
     print("")
 
     print("Testing invalid plants...")
-    finally_block(invalid_plants)
+    test_watering_system(invalid_plants)
     print("")
+
+    print("Cleanup always happens, even with errors!")
 
 
 if __name__ == "__main__":
