@@ -10,7 +10,7 @@ def water_plant(plant_name: str) -> None:
         raise PlantError(f"Invalid plant name to water: '{plant_name}'")
 
 
-def finally_block(plants: list[str]) -> None:
+def test_watering_system(plants: list[str]) -> None:
     print("Opening watering system")
     try:
         for plant in plants:
@@ -20,9 +20,10 @@ def finally_block(plants: list[str]) -> None:
         print(".. ending tests and returning to main")
     finally:
         print("Closing watering systems")
+    print("Cleanup always happens, even with errors!")
 
 
-def test() -> None:
+def finally_block() -> None:
     valid_plants = ["Tomato", "Lettuce", "Carrots"]
     invalid_plants = ["Tomato", "lettuce", "Carrots"]
 
@@ -34,10 +35,8 @@ def test() -> None:
     finally_block(invalid_plants)
     print("")
 
-    print("Cleanup always happens, even with errors!")
-
 
 if __name__ == "__main__":
     print("=== Garden Watering System ===")
     print("")
-    test()
+    finally_block()

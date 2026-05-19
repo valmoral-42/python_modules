@@ -21,7 +21,7 @@ def test_error_types() -> None:
             print("Operation completed successfully")
         except (ValueError, ZeroDivisionError, FileNotFoundError,
                 TypeError) as e:
-            print(f"Caught {type(e).__name__} error: {e}")
+            print(f"Caught {type(e).__name__}: {e}")
     print("")
     print("All error types tested successfully!")
 
