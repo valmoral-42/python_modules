@@ -24,7 +24,7 @@ def score_analytics() -> None:
         print(f"Scores processed: {score}")
         print(f"Total players: {len(score)}")
         print(f"Total score: {sum(score)}")
-        print(f"Average score: {(sum(score)/len(score))}")
+        print(f"Average score: {round((sum(score)/len(score)), 2)}")
         print(f"High score: {max(score)}")
         print(f"Low score: {min(score)}")
         print(f"Score range: {(max(score)-(min(score)))}")
