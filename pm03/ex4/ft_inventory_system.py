@@ -5,7 +5,7 @@ def inventory_system() -> None:
     # items = ["sword", "potion", "shield", "armor", "helmet", "magic_item"]
     # inventory.update({"magic_item": 1})
     inventory = {}
-    inventory.update({"magic_item": 1})
+
     for i in range(1, len(sys.argv)):
         args = sys.argv[i]
         inv_split = args.split(":")
@@ -37,9 +37,9 @@ def inventory_system() -> None:
     least = list(inventory.keys())[0]
 
     for item in inventory:
-        percentage = (inventory[item])/sum_all
+        percentage = (inventory[item]/sum_all)*100
         print(f"Item {item} represents "
-              f"{round(percentage, 2)*100}%")
+              f"{round(percentage, 1)}%")
         if inventory[item] > inventory[most]:
             most = item
         if inventory[item] < inventory[least]:
@@ -48,6 +48,7 @@ def inventory_system() -> None:
     print(f"Item most abundant: {most} with quantity {inventory[most]}")
     print(f"Item least abundant: {least} with quantity {inventory[least]}")
 
+    inventory.update({"magic_item": 1})
     print(f"Updated inventory {inventory}")
 
 
