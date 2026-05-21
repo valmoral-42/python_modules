@@ -23,7 +23,7 @@ def consume_event(prev_list: list[tuple[str, str]]) -> None:
 
 
 def data_stream() -> None:
-    for i in range(5):
+    for i in range(1000):
         event = next(gen_event())
         print(f"Event {i}: Player {event[0]} did action {event[1]}")
 
