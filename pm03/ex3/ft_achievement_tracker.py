@@ -1,7 +1,7 @@
 import random
 
 
-def gen_player_achievements(achievements) -> None:
+def gen_player_achievements(achievements: list[str]) -> set[str]:
     selection = random.sample(achievements, (random.randint(5, 16)))
     return set(selection)
 

@@ -1,7 +1,7 @@
 import sys
 
 
-def list_score() -> list:
+def list_score() -> list[int]:
     score = []
     for i in range(1, len(sys.argv)):
         try:

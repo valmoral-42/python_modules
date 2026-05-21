@@ -1,22 +1,25 @@
 import math
 
 
-def get_player_pos() -> None:
+def get_player_pos() -> tuple[float, float, float]:
     while True:
         coordinates = input("Enter new coordinates as floats "
                             "in format 'x,y,z': ")
         user_coordinates = coordinates.split(",")
         if len(user_coordinates) == 3:
             try:
-                valid_coordinates = []
-                for coordinate in user_coordinates:
-                    valid_coordinates.append(float(coordinate))
+                x = float(user_coordinates[0])
+                y = float(user_coordinates[1])
+                z = float(user_coordinates[2])
+                return x, y, z
             except ValueError:
-                print(f"Error on parameter '{coordinate}': could not "
-                      f"convert string to float: '{coordinate}'")
-                continue
-            coordinates = tuple(valid_coordinates)
-            return coordinates
+                for value in user_coordinates:
+                    try:
+                        float(value)
+                    except ValueError as e:
+                        print(f"Error on parameter '{value}': "
+                              f"could not convert string to float: '{e}'")
+                        continue
         else:
             print("Invalid syntax")
 
