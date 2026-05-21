@@ -2,8 +2,6 @@ import sys
 
 
 def inventory_system() -> None:
-    # items = ["sword", "potion", "shield", "armor", "helmet", "magic_item"]
-    # inventory.update({"magic_item": 1})
     inventory = {}
 
     for i in range(1, len(sys.argv)):
