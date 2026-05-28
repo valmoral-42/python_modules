@@ -16,9 +16,8 @@ def data_alchemist() -> None:
     print(f"Score dict: {scores}")
     avg = round(sum(scores.values())/len(names), 2)
     print(f"Score average is {avg}")
-    new_bottom = round(avg + 1)
-    new_scores = {name: random.randint(new_bottom, 1000) for name in all_cap}
-    print(f"High scores: {new_scores}")
+    high = {name: score for name, score in scores.items() if score > avg}
+    print(f"High scores: {high}")
 
 
 if __name__ == "__main__":
