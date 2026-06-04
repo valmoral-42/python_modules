@@ -17,8 +17,7 @@ def get_player_pos() -> tuple[float, float, float]:
                     try:
                         float(value)
                     except ValueError as e:
-                        print(f"Error on parameter '{value}': "
-                              f"could not convert string to float: '{e}'")
+                        print(f"Error on parameter '{value}': '{e}'")
                         continue
         else:
             print("Invalid syntax")
