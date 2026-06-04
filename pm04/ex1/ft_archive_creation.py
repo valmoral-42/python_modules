@@ -5,7 +5,7 @@ def text_recovery() -> None:
 
     argc = len(sys.argv)
     if argc != 2:
-        print("Usage: ft_ancient_text.py <file>")
+        print("Usage: ft_archive_creation.py <file>")
         print("")
         return
 
@@ -32,7 +32,7 @@ def text_recovery() -> None:
         print(f"File '{file_name}' closed.")
         print("")
 
-    except FileNotFoundError as e:
+    except Exception as e:
         print(f"Error opening file '{file_name}': {e}")
         print("")
         return

@@ -5,7 +5,7 @@ def stream_management() -> None:
 
     argc = len(sys.argv)
     if argc != 2:
-        print("Usage: ft_ancient_text.py <file>")
+        print("Usage: ft_stream_management.py <file>")
         print("")
         return
 
@@ -32,7 +32,7 @@ def stream_management() -> None:
         print(f"File '{file_name}' closed.")
         print("")
 
-    except FileNotFoundError as e:
+    except Exception as e:
         print(f"[STDERR] Error opening file '{file_name}': {e}",
               file=sys.stderr)
         print("")

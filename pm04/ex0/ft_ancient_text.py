@@ -24,9 +24,8 @@ def text_recovery() -> None:
             vault.close()
             print(f"File '{file_name}' closed.")
 
-        except FileNotFoundError as e:
+        except Exception as e:
             print(f"Error opening file '{file_name}': {e}")
-            print("Data not saved.")
             print("")
 
 
