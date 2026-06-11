@@ -90,7 +90,7 @@ class LogProcessor(DataProcessor):
             self._storage.append(data)
 
 
-class DataStream(DataProcessor):
+class DataStream():
     def __init__(self) -> None:
         self._processors: list[DataProcessor] = []
 
@@ -144,7 +144,8 @@ def main():
             {'log_level': 'INFO',
              'log_message': 'User wil is connected'}],
         42,
-        ['Hi', 'five']]
+        ['Hi', 'five']
+        ]
 
     print(f"Send first batch of data on stream: {batch}")
     data_stream.process_stream(batch)
