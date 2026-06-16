@@ -21,9 +21,9 @@ class DataProcessor(ABC):
             return (0, "")
 
         output_data = self._storage.pop(0)
+        real_rank = self._current_rank
         self._current_rank += 1
-
-        return (self._current_rank, output_data)
+        return (real_rank, output_data)
 
 
 class NumericProcessor(DataProcessor):
@@ -50,7 +50,6 @@ class TextProcessor(DataProcessor):
     def validate(self, data: Any) -> bool:
         if isinstance(data, list):
             return all(isinstance(item, str) for item in data)
-
         return isinstance(data, str)
 
     def ingest(self, data: str | list[str]) -> None:
@@ -71,8 +70,8 @@ class LogProcessor(DataProcessor):
                 and all(
                     isinstance(key, str)
                     and isinstance(value, str)
-                    for key, value in log_entry.items())
-                for log_entry in data)
+                    for key, value in
+                    log_entry.items()) for log_entry in data)
 
         if isinstance(data, dict):
             return all(
@@ -86,12 +85,15 @@ class LogProcessor(DataProcessor):
             raise ValueError("Improper log data")
 
         if isinstance(data, list):
-            for d in data:
-                formated_log = f"{d['log_level']}: {d['log_message']}"
-                self._storage.extend(formated_log)
+            for log_entry in data:
+                formatted_log = (
+                    f"{log_entry['log_level']}: "
+                    f"{log_entry['log_message']}"
+                )
+                self._storage.append(formatted_log)
         else:
-            formated_log = f"{data['log_level']}: {data['log_message']}"
-            self._storage.append(formated_log)
+            formatted_log = f"{data['log_level']}: {data['log_message']}"
+            self._storage.append(formatted_log)
 
 
 class ExportPlugin(Protocol):
@@ -115,7 +117,7 @@ class DataStream():
                     processor_found = True
                     break
             if not processor_found:
-                print(f"Data Stream error -"
+                print("Data Stream error -"
                       f" Can't process element in stream: {item}")
 
     def print_processors_stats(self) -> None:
@@ -124,8 +126,8 @@ class DataStream():
             nm = proc.__class__.__name__.replace("Processor", " Processor")
             total_items = proc._current_rank + len(proc._storage)
             remaining = len(proc._storage)
-            print(f"{nm}: total {total_items}"
-                  f" items processed, remaining {remaining} on processor")
+            print(f"{nm}: total {total_items} items processed,"
+                  f" remaining {remaining} on processor")
 
         if not self._processors:
             print("No processor found, no data")
@@ -138,7 +140,7 @@ class DataStream():
 
             while i < nb and len(proc._storage) > 0:
                 data = proc.output()
-                if data[0] > 0:
+                if data != (0, ""):
                     collected_data.append(data)
                 i += 1
 
@@ -154,17 +156,7 @@ class CSVExportPlugin():
             print("")
             return
 
-        texts = []
-        for rank, text in data:
-            if isinstance(text, str) and "'log_level'" in text:
-                log_dict = eval(text)
-                formated_string = f"{log_dict['log_level']} : "
-                f"{log_dict['log_message']}"
-                texts.append(formated_string)
-            else:
-                texts.append(str(text))
-        line_csv = ",".join(texts)
-        print(line_csv)
+        print(",".join(text for _, text in data))
 
 
 class JSONExportPlugin():
@@ -231,6 +223,7 @@ def main():
               [{'log_level': 'ERROR', 'log_message': '500 server crash'},
                {'log_level': 'NOTICE', 'log_message': 'Certificate expires'
                ' in 10 days'}], [32, 42, 64, 84, 128, 168], 'World hello']
+    print("")
     print(f"Send another batch of data: {batch2}")
     data_stream.process_stream(batch2)
     print("")
@@ -246,14 +239,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# CURRENT STATUS:
-# kinda working? logs are a bit shitty, output is kinda wrong
-# but decent base, needs work
-# but fucking next week
-
-# next week finish, test and evaluate 05
-# do all 06 and evaluate
-# start reading about the maze
-
-# or not
