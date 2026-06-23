@@ -3,9 +3,9 @@ from typing import Any, Protocol
 
 
 class DataProcessor(ABC):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
-        self._storage = []
+        self._storage: list[str] = []
         self._current_rank = 0
 
     @abstractmethod
@@ -177,7 +177,7 @@ class JSONExportPlugin():
         print(json_final)
 
 
-def main():
+def main() -> None:
     print("=== Code Nexus - Data Pipeline ===")
     print("")
 

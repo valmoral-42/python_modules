@@ -3,9 +3,9 @@ from typing import Any
 
 
 class DataProcessor(ABC):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
-        self._storage = []
+        self._storage: list[str] = []
         self._current_rank = 0
 
     @abstractmethod
@@ -16,14 +16,15 @@ class DataProcessor(ABC):
     def ingest(self, data: Any) -> None:
         pass
 
-    def output(self) -> tuple[int, Any]:
+    def output(self) -> tuple[int, str]:
         if not self._storage:
             return (0, "")
 
         output_data = self._storage.pop(0)
+        rank = self._current_rank
         self._current_rank += 1
 
-        return (self._current_rank, output_data)
+        return (rank, output_data)
 
 
 class NumericProcessor(DataProcessor):
@@ -92,12 +93,21 @@ class LogProcessor(DataProcessor):
             raise ValueError("Improper log data")
 
         if isinstance(data, list):
-            self._storage.extend(data)
+            for log_entry in data:
+                formatted_log = (
+                    f"{log_entry['log_level']}: "
+                    f"{log_entry['log_message']}"
+                )
+                self._storage.append(formatted_log)
         else:
-            self._storage.append(data)
+            formatted_log = (
+                f"{data['log_level']}: "
+                f"{data['log_message']}"
+            )
+            self._storage.append(formatted_log)
 
 
-def main():
+def main() -> None:
     print("=== Code Nexus - Data Processor ===")
     print("")
 
@@ -166,11 +176,7 @@ def main():
     log_processor.ingest(log_test_2)
     for index in range(i):
         rank, value = log_processor.output()
-
-        log_level = value["log_level"]
-        log_message = value["log_message"]
-
-        print(f" Log entry {index}: {log_level}: {log_message}")
+        print(f" Log entry {index}: {value}")
 
 
 if __name__ == "__main__":
