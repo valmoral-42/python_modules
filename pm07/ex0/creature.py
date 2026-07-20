@@ -19,8 +19,8 @@ class Flameling(Creature):
         super().__init__("Flameling", "Fire")
 
     def attack(self) -> str:
-        c_attack = "Ember"
-        return f"{self.name} uses {c_attack}!"
+        creature_attack = "Ember"
+        return f"{self.name} uses {creature_attack}!"
 
 
 class Pyrodon(Creature):
@@ -28,8 +28,8 @@ class Pyrodon(Creature):
         super().__init__("Pyrodon", "Fire/Flying")
 
     def attack(self) -> str:
-        c_attack = "Flamethrower"
-        return f"{self.name} uses {c_attack}!"
+        creature_attack = "Flamethrower"
+        return f"{self.name} uses {creature_attack}!"
 
 
 class Aquabub(Creature):
@@ -37,8 +37,8 @@ class Aquabub(Creature):
         super().__init__("Aquabub", "Water")
 
     def attack(self) -> str:
-        c_attack = "Water Gun"
-        return f"{self.name} uses {c_attack}!"
+        creature_attack = "Water Gun"
+        return f"{self.name} uses {creature_attack}!"
 
 
 class Torragon(Creature):
@@ -46,5 +46,5 @@ class Torragon(Creature):
         super().__init__("Torragon", "Water")
 
     def attack(self) -> str:
-        c_attack = "Hydro Pump"
-        return f"{self.name} uses {c_attack}!"
+        creature_attack = "Hydro Pump"
+        return f"{self.name} uses {creature_attack}!"

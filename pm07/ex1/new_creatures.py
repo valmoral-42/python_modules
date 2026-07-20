@@ -7,8 +7,8 @@ class Sproutling(Creature, HealCapability):
         super().__init__("Sproutling", "Grass")
 
     def attack(self) -> str:
-        c_attack = "Vine Whip"
-        return f"{self.name} uses {c_attack}!"
+        creature_attack = "Vine Whip"
+        return f"{self.name} uses {creature_attack}!"
 
     def heal(self) -> str:
         return f"{self.name} heals itself for a small amount"
@@ -19,8 +19,8 @@ class Bloomelle(Creature, HealCapability):
         super().__init__("Bloomelle", "Grass/Fairy")
 
     def attack(self) -> str:
-        c_attack = "Petal Dance"
-        return f"{self.name} uses {c_attack}!"
+        creature_attack = "Petal Dance"
+        return f"{self.name} uses {creature_attack}!"
 
     def heal(self) -> str:
         return f"{self.name} heals itself and others for a large amount"

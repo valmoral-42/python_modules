@@ -1,5 +1,5 @@
 from ex0.creature import Creature
-from ex0.factories import CreatureFactory
+from ex0.factory import CreatureFactory
 from ex0 import FlameFactory, AquaFactory
 from ex1 import HealingCreatureFactory, TransformCreatureFactory
 from ex2 import NormalStrategy, DefensiveStrategy, AggressiveStrategy
@@ -58,21 +58,21 @@ def run_tournament(title: str, opponents:
 
 if __name__ == "__main__":
     print()
-    tour0 = [
+    t0 = [
         (FlameFactory(), NormalStrategy()),
         (HealingCreatureFactory(), DefensiveStrategy())]
-    run_tournament("Tournament 0 (basic)", tour0)
+    run_tournament("Tournament 0 (basic)", t0)
 
     print()
-    tour1 = [
+    t1 = [
         (FlameFactory(), AggressiveStrategy()),
         (HealingCreatureFactory(), DefensiveStrategy())]
-    run_tournament("Tournament 1 (error)", tour1)
+    run_tournament("Tournament 1 (error)", t1)
     print()
 
     print()
-    tour2 = [
+    t2 = [
         (AquaFactory(), NormalStrategy()),
         (HealingCreatureFactory(), DefensiveStrategy()),
         (TransformCreatureFactory(), AggressiveStrategy())]
-    run_tournament("Tournament 2 (multiple)", tour2)
+    run_tournament("Tournament 2 (multiple)", t2)
