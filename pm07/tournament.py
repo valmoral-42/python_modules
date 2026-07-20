@@ -7,22 +7,22 @@ from ex2 import InvalidStrategyError
 from ex2.strategies import BattleStrategy
 
 
-def run_tournament(title: str, opponents:
-                   list[tuple[CreatureFactory, BattleStrategy]]) -> None:
+def tournament(tournament_info: str, opponents:
+               list[tuple[CreatureFactory, BattleStrategy]]) -> None:
     try:
-        print(title)
+        print(tournament_info)
         parts = []
         for factory, strategy in opponents:
             temp_creature = factory.create_base()
-            f_class_name = factory.__class__.__name__
-            if "Healing" in f_class_name or "Transform" in f_class_name:
-                f_display_name = f_class_name.replace(
+            factory_class_name = factory.__class__.__name__
+            if "Healing" or "Transform" in factory_class_name:
+                factory_display_name = factory_class_name.replace(
                         "CreatureFactory", "").replace("Factory", "")
             else:
-                f_display_name = temp_creature.name
-            s_display_name = strategy.__class__.__name__.replace(
+                factory_display_name = temp_creature.name
+            strategy_name = strategy.__class__.__name__.replace(
                 "Strategy", "")
-            parts.append(f"({f_display_name}+{s_display_name})")
+            parts.append(f"({factory_display_name}+{strategy_name})")
         print(f" [{', '.join(parts)}]")
 
         print()
@@ -30,18 +30,18 @@ def run_tournament(title: str, opponents:
         print(f"{len(opponents)} opponents involved")
         print()
 
-        fighters = []
+        participants = []
         for factory, strategy in opponents:
-            fighters.append((factory.create_base(), strategy))
+            participants.append((factory.create_base(), strategy))
 
-        for i in range(len(fighters)):
-            for j in range(i + 1, len(fighters)):
+        for i in range(len(participants)):
+            for j in range(i + 1, len(participants)):
 
-                c1: Creature = fighters[i][0]
-                s1: BattleStrategy = fighters[i][1]
+                c1: Creature = participants[i][0]
+                s1: BattleStrategy = participants[i][1]
 
-                c2: Creature = fighters[j][0]
-                s2: BattleStrategy = fighters[j][1]
+                c2: Creature = participants[j][0]
+                s2: BattleStrategy = participants[j][1]
 
                 print("* Battle *")
                 print(c1.describe())
@@ -61,13 +61,13 @@ if __name__ == "__main__":
     t0 = [
         (FlameFactory(), NormalStrategy()),
         (HealingCreatureFactory(), DefensiveStrategy())]
-    run_tournament("Tournament 0 (basic)", t0)
+    tournament("Tournament 0 (basic)", t0)
 
     print()
     t1 = [
         (FlameFactory(), AggressiveStrategy()),
         (HealingCreatureFactory(), DefensiveStrategy())]
-    run_tournament("Tournament 1 (error)", t1)
+    tournament("Tournament 1 (error)", t1)
     print()
 
     print()
@@ -75,4 +75,4 @@ if __name__ == "__main__":
         (AquaFactory(), NormalStrategy()),
         (HealingCreatureFactory(), DefensiveStrategy()),
         (TransformCreatureFactory(), AggressiveStrategy())]
-    run_tournament("Tournament 2 (multiple)", t2)
+    tournament("Tournament 2 (multiple)", t2)
