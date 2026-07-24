@@ -31,9 +31,9 @@ def check_packages() -> None:
 
 def make_matrix_from_data() -> None:
     try:
-        import pandas as pd
-        import numpy as np
-        import matplotlib.pyplot as plt
+        import pandas as pd  # type: ignore
+        import numpy as np  # type: ignore
+        import matplotlib.pyplot as plt  # type: ignore
 
         np.random.seed(42)
         ids = np.arange(1001, 2001)
@@ -65,7 +65,7 @@ def make_matrix_from_data() -> None:
         print("Generating visulization...")
         print()
         resumen[["Hack_level", "Return_rate"]].plot(
-            kind="bar", color=["#BCA0CA", "#7213B1"], figsize=(8, 5))
+            kind="bar", color=["#7caec2", "#366b80"], figsize=(8, 5))
         plt.title("Matrix Diagnostics: Hack Level & Return Rate by Category")
         plt.ylabel("Rate medium")
         plt.xlabel("Subject category")
