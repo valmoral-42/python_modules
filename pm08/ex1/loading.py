@@ -6,8 +6,7 @@ from typing import Final
 DEPENDENCIES: Final[dict[str, str]] = {
     "pandas": "Data manipulation",
     "numpy": "Numerical computation",
-    "matplotlib": "Visualization",
-}
+    "matplotlib": "Visualization"}
 
 
 def get_package_version(package_name: str) -> str | None:
@@ -55,10 +54,10 @@ def print_install_help() -> None:
 def show_dependency_management_difference() -> None:
     print()
     print("Dependency management comparison:")
-    print("- pip uses requirements.txt in the active environment.")
-    print("- Poetry uses pyproject.toml and manages its own environment.")
-    print("- pip usually relies on manual environment handling.")
-    print("- Poetry combines dependency resolution and environment management.")
+    print("- pip uses requirements.txt in the active environment")
+    print("- Poetry uses pyproject.toml and manages its own environment")
+    print("- pip usually relies on manual environment handling")
+    print("- Poetry combines dependency resolution and environment management")
 
 
 def run_analysis() -> None:
