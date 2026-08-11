@@ -6,8 +6,7 @@ from typing import Final
 DEPENDENCIES: Final[dict[str, str]] = {
     "pandas": "Data manipulation",
     "numpy": "Numerical computation",
-    "matplotlib": "Visualization",
-}
+    "matplotlib": "Visualization"}
 
 
 def get_package_version(package_name: str) -> str | None:
@@ -35,8 +34,7 @@ def check_dependencies() -> list[str]:
     if requests_version is not None:
         print(
             f"[OK] requests ({requests_version}) - "
-            "Network access ready"
-        )
+            "Network access ready")
 
     return missing_packages
 
@@ -55,10 +53,10 @@ def print_install_help() -> None:
 def show_dependency_management_difference() -> None:
     print()
     print("Dependency management comparison:")
-    print("- pip uses requirements.txt in the active environment.")
-    print("- Poetry uses pyproject.toml and manages its own environment.")
-    print("- pip usually relies on manual environment handling.")
-    print("- Poetry combines dependency resolution and environment management.")
+    print("- pip uses requirements.txt in the active environment")
+    print("- Poetry uses pyproject.toml and manages its own environment")
+    print("- pip usually relies on manual environment handling")
+    print("- Poetry combines dependency resolution and environment management")
 
 
 def run_analysis() -> None:
@@ -80,23 +78,18 @@ def run_analysis() -> None:
         {
             "matrix_signal": matrix_signal,
             "resistance_rate": resistance_rate,
-            "anomaly_score": anomaly_score,
-        }
-    )
+            "anomaly_score": anomaly_score})
 
     data_frame["profile"] = pd.cut(
         data_frame["matrix_signal"],
         bins=[0, 45, 75, 120],
-        labels=["BluePill", "Potential", "ZionRebel"],
-    )
+        labels=["BluePill", "Potential", "ZionRebel"])
 
     grouped = (
         data_frame.groupby("profile", observed=False)[
-            ["matrix_signal", "resistance_rate", "anomaly_score"]
-        ]
+            ["matrix_signal", "resistance_rate", "anomaly_score"]]
         .mean()
-        .round(2)
-    )
+        .round(2))
 
     print()
     print("Analyzing Matrix data...")
@@ -107,8 +100,7 @@ def run_analysis() -> None:
     axis = grouped.plot(
         kind="bar",
         figsize=(10, 6),
-        color=["#4c78a8", "#72b7b2", "#f58518"],
-    )
+        color=["#abd4b6", "#abcee0", "#d4abb8"])
     axis.set_title("Matrix Data Analysis by Profile")
     axis.set_xlabel("Profile")
     axis.set_ylabel("Average Value")

@@ -16,8 +16,7 @@ REQUIRED_VARIABLES: Final[tuple[str, ...]] = (
     "DATABASE_URL",
     "API_KEY",
     "LOG_LEVEL",
-    "ZION_ENDPOINT",
-)
+    "ZION_ENDPOINT")
 
 
 def load_configuration() -> dict[str, str | None]:
@@ -28,8 +27,7 @@ def load_configuration() -> dict[str, str | None]:
         "DATABASE_URL": os.getenv("DATABASE_URL"),
         "API_KEY": os.getenv("API_KEY"),
         "LOG_LEVEL": os.getenv("LOG_LEVEL"),
-        "ZION_ENDPOINT": os.getenv("ZION_ENDPOINT"),
-    }
+        "ZION_ENDPOINT": os.getenv("ZION_ENDPOINT")}
     return configuration
 
 
@@ -45,8 +43,7 @@ def validate_configuration(
     matrix_mode = configuration.get("MATRIX_MODE")
     if matrix_mode and matrix_mode not in {"development", "production"}:
         missing_variables.append(
-            "MATRIX_MODE must be 'development' or 'production'"
-        )
+            "MATRIX_MODE must be 'development' or 'production'")
 
     return missing_variables
 
@@ -83,8 +80,8 @@ def print_configuration(configuration: dict[str, str | None]) -> None:
     print(
         "Zion Network: Online"
         if zion_endpoint
-        else "Zion Network: Offline"
-    )
+        else "Zion Network: Offline")
+
     print(f"Database URL: {database_url}")
     print(f"API Key: {mask_secret(api_key)}")
 

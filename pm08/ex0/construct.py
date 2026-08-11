@@ -27,29 +27,40 @@ def main() -> None:
 
     if in_virtual_environment():
         print("Welcome to the construct")
+        print()
+
         print(f"Current Python: {sys.executable}")
         print(f"Virtual Environment: {get_environment_name()}")
         print(f"Environment Path: {sys.prefix}")
+        print()
+
         print("SUCCESS: You're in an isolated environment!")
-        print(
-            "Safe to install packages without affecting the global system."
-        )
+        print("Safe to install packages without affecting the global system.")
+        print()
+
         print(f"Package installation path: {get_package_path()}")
     else:
         print("You're still plugged in")
+        print()
+
         print(f"Current Python: {sys.executable}")
         print("Virtual Environment: None detected")
+        print()
+
         print("WARNING: You're in the global environment!")
-        print(
-            "The machines can see everything you install."
-        )
+        print("The machines can see everything you install.")
+        print()
+
         print(f"Global package installation path: {get_package_path()}")
         print("To enter the construct, run:")
         print("python3 -m venv matrix_env")
         print("source matrix_env/bin/activate  # On Unix")
         print(r"matrix_env\Scripts\activate     # On Windows")
+        print()
+
         print("Then run this program again.")
 
 
 if __name__ == "__main__":
+    print()
     main()
