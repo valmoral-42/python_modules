@@ -70,9 +70,9 @@ def run_analysis() -> None:
 
     np.random.seed()
 
-    matrix_signal = np.random.normal(loc=60.0, scale=15.0, size=500)
-    resistance_rate = np.random.uniform(low=01.0, high=99.0, size=500)
-    anomaly_score = np.random.normal(loc=50.0, scale=20.0, size=500)
+    matrix_signal = np.random.normal(loc=60.0, scale=15.0, size=1000)
+    resistance_rate = np.random.uniform(low=01.0, high=99.0, size=1000)
+    anomaly_score = np.random.normal(loc=50.0, scale=20.0, size=1000)
 
     data_frame = pd.DataFrame(
         {
