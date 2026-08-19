@@ -68,10 +68,10 @@ def run_analysis() -> None:
         print_install_help()
         sys.exit(1)
 
-    np.random.seed(42)
+    np.random.seed()
 
     matrix_signal = np.random.normal(loc=60.0, scale=15.0, size=1000)
-    resistance_rate = np.random.uniform(low=10.0, high=95.0, size=1000)
+    resistance_rate = np.random.uniform(low=01.0, high=99.0, size=1000)
     anomaly_score = np.random.normal(loc=50.0, scale=20.0, size=1000)
 
     data_frame = pd.DataFrame(

@@ -23,10 +23,9 @@ def get_package_path() -> str:
 
 
 def main() -> None:
-    print("MATRIX STATUS:", end=" ")
 
     if in_virtual_environment():
-        print("Welcome to the construct")
+        print("MATRIX STATUS: Welcome to the construct")
         print()
 
         print(f"Current Python: {sys.executable}")
@@ -38,9 +37,10 @@ def main() -> None:
         print("Safe to install packages without affecting the global system.")
         print()
 
-        print(f"Package installation path: {get_package_path()}")
+        print("Package installation path:")
+        print(f"{get_package_path()}")
     else:
-        print("You're still plugged in")
+        print("MATRIX STATUS: You're still plugged in")
         print()
 
         print(f"Current Python: {sys.executable}")
@@ -51,7 +51,6 @@ def main() -> None:
         print("The machines can see everything you install.")
         print()
 
-        print(f"Global package installation path: {get_package_path()}")
         print("To enter the construct, run:")
         print("python3 -m venv matrix_env")
         print("source matrix_env/bin/activate  # On Unix")
