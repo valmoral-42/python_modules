@@ -6,8 +6,7 @@ from typing import Final
 DEPENDENCIES: Final[dict[str, str]] = {
     "pandas": "Data manipulation",
     "numpy": "Numerical computation",
-    "matplotlib": "Visualization",
-}
+    "matplotlib": "Visualization"}
 
 SUBJECT_COUNT: Final[int] = 1000
 
@@ -16,22 +15,19 @@ PROFILE_BINS: Final[list[float]] = [
     30.0,
     50.0,
     70.0,
-    100.0,
-]
+    100.1]
 
 PROFILE_LABELS: Final[list[str]] = [
     "Dormant",
     "Questioning",
     "Aware",
-    "Awakened",
-]
+    "Awakened"]
 
 PROFILE_COLORS: Final[list[str]] = [
-    "#4E8DCC",
-    "#67C6E3",
-    "#71B68B",
-    "#E97B7B",
-]
+    "#2c7194",
+    "#97bacc",
+    "#cc839d",
+    "#942c52"]
 
 
 def get_package_version(package_name: str) -> str | None:
@@ -81,50 +77,28 @@ def run_analysis() -> None:
     try:
         import matplotlib.pyplot as plt  # type: ignore
         import numpy as np  # type: ignore
-        import pandas as pd  # type: ignore
+        import pandas as pnd  # type: ignore
     except ImportError:
         print_install_help()
         sys.exit(1)
 
     matrix_signal = np.clip(
-        np.random.normal(
-            loc=50.0,
-            scale=30.0,
-            size=SUBJECT_COUNT,
-        ),
-        0.0,
-        100.0,
-    )
+        np.random.normal(loc=10, scale=90, size=SUBJECT_COUNT), 0, 100)
 
-    resistance_rate = np.random.uniform(
-        low=1.0,
-        high=99.0,
-        size=SUBJECT_COUNT,
-    )
+    resistance_rate = np.random.uniform(low=0, high=100, size=SUBJECT_COUNT)
 
-    anomaly_score = np.clip(
-        np.random.normal(
-            loc=50.0,
-            scale=20.0,
-            size=SUBJECT_COUNT,
-        ),
-        0.0,
-        100.0,
-    )
+    data_frame = pnd.DataFrame(
+        {"matrix_signal": matrix_signal,
+         "resistance_rate": resistance_rate})
 
-    data_frame = pd.DataFrame(
-        {
-            "matrix_signal": matrix_signal,
-            "resistance_rate": resistance_rate,
-            "anomaly_score": anomaly_score,
-        }
-    )
+    data_frame["awakening_score"] = (
+        data_frame["matrix_signal"] * 0.6
+        + data_frame["resistance_rate"] * 0.4)
 
-    data_frame["profile"] = pd.cut(
-        data_frame["matrix_signal"],
+    data_frame["profile"] = pnd.cut(
+        data_frame["awakening_score"],
         bins=PROFILE_BINS,
-        labels=PROFILE_LABELS,
-    )
+        labels=PROFILE_LABELS)
 
     profile_counts = data_frame["profile"].value_counts(sort=False)
 
@@ -139,19 +113,14 @@ def run_analysis() -> None:
         kind="bar",
         figsize=(10, 6),
         color=PROFILE_COLORS,
-        edgecolor="#101827",
-    )
+        edgecolor="#000000")
 
-    axis.set_title(
-        "Matrix Population: Awakening Profiles",
-        color="#101827",
-        pad=15,
-    )
-    axis.set_xlabel("Awakening Profile", color="#101827")
-    axis.set_ylabel("Connected Subjects", color="#101827")
+    axis.set_title("Matrix Population", color="#000000", pad=15)
+    axis.set_xlabel("Awakening Profile", color="#000000")
+    axis.set_ylabel("Connected Subjects", color="#000000")
     axis.grid(axis="y", linestyle="--", alpha=0.35)
     axis.tick_params(axis="x", rotation=0)
-    axis.set_facecolor("#F5F8FC")
+    axis.set_facecolor("#FAFAFA")
 
     plt.tight_layout()
     plt.savefig("matrix_analysis.png", dpi=150)
