@@ -1,59 +1,52 @@
 import os
 import sys
-from typing import Final
 
 try:
     from dotenv import load_dotenv
 except ImportError:
     print("[WARNING] python-dotenv not found.")
     print("Install it with:")
-    print("pip install python-dotenv")
+    print("pip install -r requirements.txt")
     sys.exit(1)
 
 
-REQUIRED_VARIABLES: Final[tuple[str, ...]] = (
+REQUIRED_VARIABLES = (
     "MATRIX_MODE",
     "DATABASE_URL",
     "API_KEY",
     "LOG_LEVEL",
-    "ZION_ENDPOINT")
+    "ZION_ENDPOINT",
+)
 
 
 def load_configuration() -> dict[str, str | None]:
     load_dotenv()
 
-    configuration: dict[str, str | None] = {
+    return {
         "MATRIX_MODE": os.getenv("MATRIX_MODE"),
         "DATABASE_URL": os.getenv("DATABASE_URL"),
         "API_KEY": os.getenv("API_KEY"),
         "LOG_LEVEL": os.getenv("LOG_LEVEL"),
-        "ZION_ENDPOINT": os.getenv("ZION_ENDPOINT")}
-    return configuration
+        "ZION_ENDPOINT": os.getenv("ZION_ENDPOINT"),
+    }
 
 
 def validate_configuration(
     configuration: dict[str, str | None],
 ) -> list[str]:
-    missing_variables: list[str] = []
+    config_issues: list[str] = []
 
     for variable_name in REQUIRED_VARIABLES:
         if not configuration.get(variable_name):
-            missing_variables.append(variable_name)
+            config_issues.append(variable_name)
 
     matrix_mode = configuration.get("MATRIX_MODE")
     if matrix_mode and matrix_mode not in {"development", "production"}:
-        missing_variables.append(
-            "MATRIX_MODE must be 'development' or 'production'")
+        config_issues.append(
+            "MATRIX_MODE must be 'development' or 'production'"
+        )
 
-    return missing_variables
-
-
-def mask_secret(secret: str | None) -> str:
-    if not secret:
-        return "Missing"
-    if len(secret) <= 4:
-        return "*" * len(secret)
-    return f"{secret[:2]}{'*' * (len(secret) - 4)}{secret[-2:]}"
+    return config_issues
 
 
 def print_configuration(configuration: dict[str, str | None]) -> None:
@@ -80,10 +73,9 @@ def print_configuration(configuration: dict[str, str | None]) -> None:
     print(
         "Zion Network: Online"
         if zion_endpoint
-        else "Zion Network: Offline")
-
-    print(f"Database URL: {database_url}")
-    print(f"API Key: {mask_secret(api_key)}")
+        else "Zion Network: Offline"
+    )
+    print("Database URL: Configured" if database_url else "Database URL: Missing")
 
 
 def print_security_check() -> None:
@@ -97,17 +89,18 @@ def print_security_check() -> None:
         print("[WARNING] .env file not found in current directory")
 
     print("[OK] Production overrides available via environment variables")
-    print("The Oracle sees all configurations.")
+    print()
+    print("The Oracle sees all configurations.\n")
 
 
 def main() -> None:
-    print("ORACLE STATUS: Reading the Matrix...")
+    print("\nORACLE STATUS: Reading the Matrix...\n")
     configuration = load_configuration()
-    missing_variables = validate_configuration(configuration)
+    config_issues = validate_configuration(configuration)
 
-    if missing_variables:
+    if config_issues:
         print("Configuration warnings:")
-        for variable_name in missing_variables:
+        for variable_name in config_issues:
             print(f"- Missing or invalid: {variable_name}")
         print("ORACLE STATUS: Matrix configuration is incomplete")
         print_security_check()

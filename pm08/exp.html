@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Matrix Data Engineering — Evaluation Guide</title>
+  <style>
+    :root {
+      --navy: #102236;
+      --blue: #2c7194;
+      --pale-blue: #97bacc;
+      --rose: #cc839d;
+      --red: #942c52;
+      --paper: #ffffff;
+      --soft: #f4f7fa;
+      --ink: #1f2933;
+      --muted: #536271;
+      --line: #d7e0e8;
+      --code: #17212b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--soft);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+    main {
+      max-width: 980px;
+      margin: 28px auto;
+      padding: 46px 58px;
+      background: var(--paper);
+      box-shadow: 0 2px 14px rgba(16, 34, 54, 0.12);
+    }
+    h1, h2, h3 { color: var(--navy); line-height: 1.2; }
+    h1 { font-size: 2.1rem; margin: 0 0 8px; }
+    h2 { border-bottom: 2px solid var(--pale-blue); margin-top: 42px; padding-bottom: 8px; }
+    h3 { margin-top: 28px; }
+    .subtitle { color: var(--muted); margin-top: 0; font-size: 1.05rem; }
+    .note, .answer, .warning {
+      border-left: 5px solid var(--blue);
+      background: #eef6fa;
+      padding: 14px 17px;
+      margin: 18px 0;
+    }
+    .answer { border-left-color: var(--red); background: #fcf2f5; }
+    .warning { border-left-color: #b27819; background: #fff8e8; }
+    code {
+      font-family: Consolas, "Courier New", monospace;
+      background: #edf2f5;
+      padding: 1px 4px;
+      border-radius: 3px;
+    }
+    pre {
+      background: var(--code);
+      color: #e8f0f5;
+      padding: 16px;
+      overflow-x: auto;
+      border-radius: 5px;
+      line-height: 1.45;
+    }
+    pre code { background: transparent; padding: 0; }
+    table { border-collapse: collapse; width: 100%; margin: 16px 0 22px; }
+    th, td { border: 1px solid var(--line); text-align: left; padding: 9px 10px; vertical-align: top; }
+    th { background: #eaf1f5; color: var(--navy); }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; }
+    .toc a { color: var(--blue); text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+    .small { color: var(--muted); font-size: .93rem; }
+    @media print {
+      body { background: white; }
+      main { margin: 0; max-width: none; box-shadow: none; padding: 18mm; }
+      h2 { page-break-after: avoid; }
+      pre, table, .note, .answer, .warning { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Matrix Data Engineering</h1>
+  <p class="subtitle">Evaluation guide — project flow, concepts, explanations, and rehearsal answers</p>
+
+  <div class="note">
+    <strong>Project in one sentence:</strong> This project demonstrates how to isolate Python projects with virtual environments, manage dependencies with pip and Poetry, and load secure configuration through environment variables; Exercise 1 also simulates and visualizes a Matrix population.
+  </div>
+
+  <h2>Contents</h2>
+  <ol class="toc">
+    <li><a href="#map">Project map</a></li>
+    <li><a href="#ex0">Exercise 0 — construct.py</a></li>
+    <li><a href="#ex1">Exercise 1 — loading.py</a></li>
+    <li><a href="#ex2">Exercise 2 — oracle.py</a></li>
+    <li><a href="#concepts">Important concepts</a></li>
+    <li><a href="#tests">Testing checklist</a></li>
+    <li><a href="#questions">Evaluation questions and answers</a></li>
+  </ol>
+
+  <h2 id="map">1. Project map</h2>
+  <table>
+    <thead><tr><th>Exercise</th><th>Files</th><th>Main lesson</th></tr></thead>
+    <tbody>
+      <tr><td>0</td><td><code>construct.py</code></td><td>Detecting and understanding virtual environments.</td></tr>
+      <tr><td>1</td><td><code>loading.py</code>, <code>requirements.txt</code>, <code>pyproject.toml</code></td><td>Managing dependencies with pip and Poetry; generating, analyzing, and plotting simulated data.</td></tr>
+      <tr><td>2</td><td><code>oracle.py</code>, <code>requirements.txt</code>, <code>.env.example</code>, <code>.gitignore</code></td><td>Secure configuration through environment variables and <code>.env</code> files.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="ex0">2. Exercise 0 — construct.py</h2>
+  <h3>Purpose</h3>
+  <p>This program checks whether the currently running Python interpreter belongs to a virtual environment. It prints different information and instructions depending on the result.</p>
+
+  <h3>Imports</h3>
+  <table>
+    <thead><tr><th>Import</th><th>Meaning and use</th></tr></thead>
+    <tbody>
+      <tr><td><code>import sys</code></td><td>Gives information about the running Python interpreter: <code>sys.prefix</code>, <code>sys.base_prefix</code>, and <code>sys.executable</code>.</td></tr>
+      <tr><td><code>import os</code></td><td>Lets the program read environment variables such as <code>VIRTUAL_ENV</code> and manipulate file paths.</td></tr>
+      <tr><td><code>import site</code></td><td>Provides package-installation locations through <code>site.getsitepackages()</code> and <code>site.getusersitepackages()</code>.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Flow</h3>
+  <ol>
+    <li>Python runs <code>main()</code> only when the file is executed directly, because of <code>if __name__ == "__main__"</code>.</li>
+    <li><code>in_virtual_environment()</code> compares <code>sys.prefix</code> with <code>sys.base_prefix</code>.</li>
+    <li>If they differ, Python is running inside a venv. If they are the same, it is using global Python.</li>
+    <li><code>get_environment_name()</code> tries to read <code>VIRTUAL_ENV</code>; it extracts the final folder name with <code>os.path.basename()</code>.</li>
+    <li><code>get_package_path()</code> finds the active package directory, normally a path ending in <code>site-packages</code>.</li>
+    <li>The program prints either a success message for the venv or instructions to create and activate one.</li>
+  </ol>
+
+  <h3>Key commands</h3>
+  <pre><code>python3 -m venv matrix_env
+source matrix_env/bin/activate      # Unix/macOS
+matrix_env\Scripts\activate         # Windows
+deactivate</code></pre>
+  <ul>
+    <li><code>python3 -m venv matrix_env</code> creates a venv folder named <code>matrix_env</code>.</li>
+    <li>Activation changes the current terminal session so <code>python</code> and <code>pip</code> use that venv.</li>
+    <li><code>deactivate</code> leaves the venv but does not delete it. You can activate the same venv later and keep its installed packages.</li>
+  </ul>
+
+  <h2 id="ex1">3. Exercise 1 — loading.py</h2>
+  <h3>Purpose</h3>
+  <p>This is a Matrix population scanner. It checks packages, explains pip and Poetry, simulates 1,000 connected subjects, calculates an awakening score, places each subject into an awakening profile, counts profiles, and saves a chart as <code>matrix_analysis.png</code>.</p>
+
+  <h3>Imports</h3>
+  <table>
+    <thead><tr><th>Import</th><th>Use in this file</th></tr></thead>
+    <tbody>
+      <tr><td><code>import sys</code></td><td>Uses <code>sys.exit(1)</code> to stop safely when dependencies are unavailable.</td></tr>
+      <tr><td><code>from importlib import metadata</code></td><td>Uses <code>metadata.version(package_name)</code> to ask Python which installed version a package has.</td></tr>
+      <tr><td><code>from typing import Final</code></td><td>Marks configuration values as constants that should not be reassigned.</td></tr>
+      <tr><td><code>import numpy as np</code></td><td>Imported inside <code>run_analysis()</code>. Generates numerical random data and clips values to a percentage range.</td></tr>
+      <tr><td><code>import pandas as pnd</code></td><td>Imported inside <code>run_analysis()</code>. Creates the table, calculates columns, categorizes scores, and counts profiles.</td></tr>
+      <tr><td><code>import matplotlib.pyplot as plt</code></td><td>Imported inside <code>run_analysis()</code>. Saves the chart image.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Constants</h3>
+  <table>
+    <thead><tr><th>Constant</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td><code>DEPENDENCIES</code></td><td>Maps required package names to a plain-language purpose, so one loop can check and report them.</td></tr>
+      <tr><td><code>SUBJECT_COUNT = 1000</code></td><td>Defines how many simulated people are generated.</td></tr>
+      <tr><td><code>PROFILE_BINS</code></td><td>Defines numerical boundaries used to classify the awakening score.</td></tr>
+      <tr><td><code>PROFILE_LABELS</code></td><td>Defines the ordered categories: Dormant, Questioning, Aware, Awakened.</td></tr>
+      <tr><td><code>PROFILE_COLORS</code></td><td>Defines the colors used for the profile-count bars.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Complete flow</h3>
+  <ol>
+    <li><strong>Entry point:</strong> <code>main()</code> starts when <code>loading.py</code> runs directly.</li>
+    <li><strong>Dependency check:</strong> <code>check_dependencies()</code> loops over pandas, NumPy, and matplotlib.</li>
+    <li><strong>Version lookup:</strong> <code>get_package_version()</code> calls <code>metadata.version()</code>. It returns the version string or <code>None</code> when the distribution is missing.</li>
+    <li><strong>Graceful failure:</strong> if any required package is missing, the script prints pip and Poetry installation instructions and ends with <code>sys.exit(1)</code>.</li>
+    <li><strong>Dependency explanation:</strong> it prints the practical distinction between pip and Poetry.</li>
+    <li><strong>Safe imports:</strong> after the checks pass, it imports matplotlib, NumPy, and pandas inside <code>run_analysis()</code>. The <code>try/except ImportError</code> is a second safety layer.</li>
+    <li><strong>Generate Matrix signal:</strong> NumPy produces 1,000 values with a normal distribution centered at 10 and a wide spread of 90. <code>np.clip(..., 0, 100)</code> forces all values into the valid percentage range.</li>
+    <li><strong>Generate resistance rate:</strong> NumPy produces 1,000 uniformly distributed values from 0 up to 100.</li>
+    <li><strong>Create a DataFrame:</strong> pandas stores both arrays as columns in a 1,000-row table.</li>
+    <li><strong>Calculate awakening score:</strong> the script gives Matrix signal 60

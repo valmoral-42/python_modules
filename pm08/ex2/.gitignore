@@ -1,0 +1,11 @@
+# local config, need for now, obvs DELETE LATER BEFORE SUBMISSION   
+# .env
+
+# cache
+__pycache__/
+*.pyc
+
+# venvs
+venv/
+.venv/
+matrix_env/

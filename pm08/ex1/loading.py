@@ -4,17 +4,17 @@ from typing import Final
 
 
 DEPENDENCIES: Final[dict[str, str]] = {
-    "pandas": "Data manipulation",
     "numpy": "Numerical computation",
-    "matplotlib": "Visualization"}
+    "pandas": "Data manipulation",
+    "matplotlib": "Data visualization"}
 
 SUBJECT_COUNT: Final[int] = 1000
 
 PROFILE_BINS: Final[list[float]] = [
     -0.1,
     30.0,
-    50.0,
-    70.0,
+    60.0,
+    75.0,
     100.1]
 
 PROFILE_LABELS: Final[list[str]] = [
@@ -83,7 +83,7 @@ def run_analysis() -> None:
         sys.exit(1)
 
     matrix_signal = np.clip(
-        np.random.normal(loc=10, scale=90, size=SUBJECT_COUNT), 0, 100)
+        np.random.normal(loc=5, scale=90, size=SUBJECT_COUNT), 0, 100)
 
     resistance_rate = np.random.uniform(low=0, high=100, size=SUBJECT_COUNT)
 
