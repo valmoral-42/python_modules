@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Matrix Data Engineering — Evaluation Guide</title>
+  <title>Matrix Data Engineering — Updated Evaluation Guide</title>
   <style>
     :root {
       --navy: #102236;
@@ -17,8 +17,13 @@
       --muted: #536271;
       --line: #d7e0e8;
       --code: #17212b;
+      --warning: #8a6116;
     }
-    * { box-sizing: border-box; }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       color: var(--ink);
@@ -26,32 +31,69 @@
       font-family: Arial, Helvetica, sans-serif;
       line-height: 1.55;
     }
+
     main {
-      max-width: 980px;
+      max-width: 1000px;
       margin: 28px auto;
       padding: 46px 58px;
       background: var(--paper);
       box-shadow: 0 2px 14px rgba(16, 34, 54, 0.12);
     }
-    h1, h2, h3 { color: var(--navy); line-height: 1.2; }
-    h1 { font-size: 2.1rem; margin: 0 0 8px; }
-    h2 { border-bottom: 2px solid var(--pale-blue); margin-top: 42px; padding-bottom: 8px; }
-    h3 { margin-top: 28px; }
-    .subtitle { color: var(--muted); margin-top: 0; font-size: 1.05rem; }
-    .note, .answer, .warning {
+
+    h1,
+    h2,
+    h3 {
+      color: var(--navy);
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: 2.1rem;
+      margin: 0 0 8px;
+    }
+
+    h2 {
+      border-bottom: 2px solid var(--pale-blue);
+      margin-top: 42px;
+      padding-bottom: 8px;
+    }
+
+    h3 {
+      margin-top: 28px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-top: 0;
+      font-size: 1.05rem;
+    }
+
+    .note,
+    .answer,
+    .warning {
       border-left: 5px solid var(--blue);
       background: #eef6fa;
       padding: 14px 17px;
       margin: 18px 0;
     }
-    .answer { border-left-color: var(--red); background: #fcf2f5; }
-    .warning { border-left-color: #b27819; background: #fff8e8; }
+
+    .answer {
+      border-left-color: var(--red);
+      background: #fcf2f5;
+    }
+
+    .warning {
+      border-left-color: var(--warning);
+      background: #fff8e8;
+    }
+
     code {
       font-family: Consolas, "Courier New", monospace;
       background: #edf2f5;
       padding: 1px 4px;
       border-radius: 3px;
     }
+
     pre {
       background: var(--code);
       color: #e8f0f5;
@@ -60,126 +102,963 @@
       border-radius: 5px;
       line-height: 1.45;
     }
-    pre code { background: transparent; padding: 0; }
-    table { border-collapse: collapse; width: 100%; margin: 16px 0 22px; }
-    th, td { border: 1px solid var(--line); text-align: left; padding: 9px 10px; vertical-align: top; }
-    th { background: #eaf1f5; color: var(--navy); }
-    ul, ol { padding-left: 22px; }
-    li { margin: 6px 0; }
-    .toc a { color: var(--blue); text-decoration: none; }
-    .toc a:hover { text-decoration: underline; }
-    .small { color: var(--muted); font-size: .93rem; }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 16px 0 22px;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--line);
+      text-align: left;
+      padding: 9px 10px;
+      vertical-align: top;
+    }
+
+    th {
+      background: #eaf1f5;
+      color: var(--navy);
+    }
+
+    ul,
+    ol {
+      padding-left: 22px;
+    }
+
+    li {
+      margin: 6px 0;
+    }
+
+    .toc a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      text-decoration: underline;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
     @media print {
-      body { background: white; }
-      main { margin: 0; max-width: none; box-shadow: none; padding: 18mm; }
-      h2 { page-break-after: avoid; }
-      pre, table, .note, .answer, .warning { break-inside: avoid; }
+      body {
+        background: white;
+      }
+
+      main {
+        margin: 0;
+        max-width: none;
+        box-shadow: none;
+        padding: 18mm;
+      }
+
+      h2 {
+        page-break-after: avoid;
+      }
+
+      pre,
+      table,
+      .note,
+      .answer,
+      .warning {
+        break-inside: avoid;
+      }
     }
   </style>
 </head>
 <body>
-<main>
-  <h1>Matrix Data Engineering</h1>
-  <p class="subtitle">Evaluation guide — project flow, concepts, explanations, and rehearsal answers</p>
+  <main>
+    <h1>Matrix Data Engineering</h1>
+    <p class="subtitle">Updated evaluation guide — current project status</p>
 
-  <div class="note">
-    <strong>Project in one sentence:</strong> This project demonstrates how to isolate Python projects with virtual environments, manage dependencies with pip and Poetry, and load secure configuration through environment variables; Exercise 1 also simulates and visualizes a Matrix population.
-  </div>
+    <h2>Contents</h2>
+    <ol class="toc">
+      <li><a href="#overview">Project overview</a></li>
+      <li><a href="#ex0">Exercise 0 — construct.py</a></li>
+      <li><a href="#ex1">Exercise 1 — loading.py</a></li>
+      <li><a href="#ex2">Exercise 2 — oracle.py</a></li>
+      <li><a href="#files">Supporting files</a></li>
+      <li><a href="#concepts">Important concepts</a></li>
+      <li><a href="#testing">Testing checklist</a></li>
+      <li><a href="#qa">Evaluation questions and answers</a></li>
+      <li><a href="#review">Final review notes</a></li>
+    </ol>
 
-  <h2>Contents</h2>
-  <ol class="toc">
-    <li><a href="#map">Project map</a></li>
-    <li><a href="#ex0">Exercise 0 — construct.py</a></li>
-    <li><a href="#ex1">Exercise 1 — loading.py</a></li>
-    <li><a href="#ex2">Exercise 2 — oracle.py</a></li>
-    <li><a href="#concepts">Important concepts</a></li>
-    <li><a href="#tests">Testing checklist</a></li>
-    <li><a href="#questions">Evaluation questions and answers</a></li>
-  </ol>
+    <h2 id="overview">1. Project overview</h2>
 
-  <h2 id="map">1. Project map</h2>
-  <table>
-    <thead><tr><th>Exercise</th><th>Files</th><th>Main lesson</th></tr></thead>
-    <tbody>
-      <tr><td>0</td><td><code>construct.py</code></td><td>Detecting and understanding virtual environments.</td></tr>
-      <tr><td>1</td><td><code>loading.py</code>, <code>requirements.txt</code>, <code>pyproject.toml</code></td><td>Managing dependencies with pip and Poetry; generating, analyzing, and plotting simulated data.</td></tr>
-      <tr><td>2</td><td><code>oracle.py</code>, <code>requirements.txt</code>, <code>.env.example</code>, <code>.gitignore</code></td><td>Secure configuration through environment variables and <code>.env</code> files.</td></tr>
-    </tbody>
-  </table>
+    <p>
+      The project teaches three related pieces of real-world Python and
+      data-engineering practice:
+    </p>
 
-  <h2 id="ex0">2. Exercise 0 — construct.py</h2>
-  <h3>Purpose</h3>
-  <p>This program checks whether the currently running Python interpreter belongs to a virtual environment. It prints different information and instructions depending on the result.</p>
+    <ol>
+      <li>
+        <strong>Isolation:</strong> use a virtual environment so packages for
+        one project do not interfere with other projects.
+      </li>
+      <li>
+        <strong>Dependencies:</strong> describe and install external libraries
+        with pip and Poetry.
+      </li>
+      <li>
+        <strong>Configuration:</strong> keep environment-specific settings and
+        secrets outside the source code.
+      </li>
+    </ol>
 
-  <h3>Imports</h3>
-  <table>
-    <thead><tr><th>Import</th><th>Meaning and use</th></tr></thead>
-    <tbody>
-      <tr><td><code>import sys</code></td><td>Gives information about the running Python interpreter: <code>sys.prefix</code>, <code>sys.base_prefix</code>, and <code>sys.executable</code>.</td></tr>
-      <tr><td><code>import os</code></td><td>Lets the program read environment variables such as <code>VIRTUAL_ENV</code> and manipulate file paths.</td></tr>
-      <tr><td><code>import site</code></td><td>Provides package-installation locations through <code>site.getsitepackages()</code> and <code>site.getusersitepackages()</code>.</td></tr>
-    </tbody>
-  </table>
+    <table>
+      <thead>
+        <tr>
+          <th>Exercise</th>
+          <th>Files</th>
+          <th>Lesson</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>0</td>
+          <td><code>construct.py</code></td>
+          <td>Detect and inspect virtual environments.</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>
+            <code>loading.py</code>,
+            <code>requirements.txt</code>,
+            <code>pyproject.toml</code>
+          </td>
+          <td>
+            Check dependencies, simulate data, calculate profiles, and generate
+            a chart.
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>
+            <code>oracle.py</code>,
+            <code>requirements.txt</code>,
+            <code>.env</code>,
+            <code>.env.example</code>,
+            <code>.gitignore</code>
+          </td>
+          <td>Load, validate, and protect configuration.</td>
+        </tr>
+      </tbody>
+    </table>
 
-  <h3>Flow</h3>
-  <ol>
-    <li>Python runs <code>main()</code> only when the file is executed directly, because of <code>if __name__ == "__main__"</code>.</li>
-    <li><code>in_virtual_environment()</code> compares <code>sys.prefix</code> with <code>sys.base_prefix</code>.</li>
-    <li>If they differ, Python is running inside a venv. If they are the same, it is using global Python.</li>
-    <li><code>get_environment_name()</code> tries to read <code>VIRTUAL_ENV</code>; it extracts the final folder name with <code>os.path.basename()</code>.</li>
-    <li><code>get_package_path()</code> finds the active package directory, normally a path ending in <code>site-packages</code>.</li>
-    <li>The program prints either a success message for the venv or instructions to create and activate one.</li>
-  </ol>
+    <h3>General subject rules</h3>
 
-  <h3>Key commands</h3>
-  <pre><code>python3 -m venv matrix_env
-source matrix_env/bin/activate      # Unix/macOS
-matrix_env\Scripts\activate         # Windows
+    <ul>
+      <li>Python 3.10 or later.</li>
+      <li>flake8-compatible style.</li>
+      <li>Comprehensive type annotations checked with mypy.</li>
+      <li>Exception handling that protects the data workflow from corruption.</li>
+      <li>
+        Testing with and without virtual environments, dependencies, and
+        configuration.
+      </li>
+    </ul>
+
+    <h2 id="ex0">2. Exercise 0 — construct.py</h2>
+
+    <h3>Purpose</h3>
+
+    <p>
+      <code>construct.py</code> determines whether the current Python
+      interpreter is inside a virtual environment. It then prints the active
+      interpreter, environment name, package location, or instructions for
+      creating a virtual environment.
+    </p>
+
+    <h3>Imports</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Import</th>
+          <th>Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>sys</code></td>
+          <td>
+            Provides information about the running interpreter, including
+            <code>prefix</code>, <code>base_prefix</code>, and
+            <code>executable</code>.
+          </td>
+        </tr>
+        <tr>
+          <td><code>os</code></td>
+          <td>
+            Reads <code>VIRTUAL_ENV</code> and extracts folder names with
+            <code>os.path.basename()</code>.
+          </td>
+        </tr>
+        <tr>
+          <td><code>site</code></td>
+          <td>
+            Finds Python package directories with
+            <code>getsitepackages()</code> and
+            <code>getusersitepackages()</code>.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Program flow</h3>
+
+    <ol>
+      <li>
+        The <code>if __name__ == "__main__"</code> block calls
+        <code>main()</code> when the file is run directly.
+      </li>
+      <li>
+        <code>in_virtual_environment()</code> compares
+        <code>sys.prefix</code> with <code>sys.base_prefix</code>.
+      </li>
+      <li>
+        If the values differ, the current interpreter belongs to a virtual
+        environment.
+      </li>
+      <li>
+        <code>get_environment_name()</code> checks
+        <code>VIRTUAL_ENV</code> and extracts its final folder name. If
+        unavailable, it uses the final part of <code>sys.prefix</code>.
+      </li>
+      <li>
+        <code>get_package_path()</code> returns the first system or virtual
+        environment package directory, or the user package directory as a
+        fallback.
+      </li>
+      <li>
+        Inside a venv, the program prints “Welcome to the construct”, the
+        interpreter path, venv name, venv path, and package installation path.
+      </li>
+      <li>
+        Outside a venv, it prints “You’re still plugged in”, warns about global
+        installation, and shows commands to create and activate a venv.
+      </li>
+    </ol>
+
+    <pre><code>python3 -m venv matrix_env
+source matrix_env/bin/activate       # Unix/macOS
+matrix_env\Scripts\activate          # Windows
 deactivate</code></pre>
-  <ul>
-    <li><code>python3 -m venv matrix_env</code> creates a venv folder named <code>matrix_env</code>.</li>
-    <li>Activation changes the current terminal session so <code>python</code> and <code>pip</code> use that venv.</li>
-    <li><code>deactivate</code> leaves the venv but does not delete it. You can activate the same venv later and keep its installed packages.</li>
-  </ul>
 
-  <h2 id="ex1">3. Exercise 1 — loading.py</h2>
-  <h3>Purpose</h3>
-  <p>This is a Matrix population scanner. It checks packages, explains pip and Poetry, simulates 1,000 connected subjects, calculates an awakening score, places each subject into an awakening profile, counts profiles, and saves a chart as <code>matrix_analysis.png</code>.</p>
+    <h3>Current output choice</h3>
 
-  <h3>Imports</h3>
-  <table>
-    <thead><tr><th>Import</th><th>Use in this file</th></tr></thead>
-    <tbody>
-      <tr><td><code>import sys</code></td><td>Uses <code>sys.exit(1)</code> to stop safely when dependencies are unavailable.</td></tr>
-      <tr><td><code>from importlib import metadata</code></td><td>Uses <code>metadata.version(package_name)</code> to ask Python which installed version a package has.</td></tr>
-      <tr><td><code>from typing import Final</code></td><td>Marks configuration values as constants that should not be reassigned.</td></tr>
-      <tr><td><code>import numpy as np</code></td><td>Imported inside <code>run_analysis()</code>. Generates numerical random data and clips values to a percentage range.</td></tr>
-      <tr><td><code>import pandas as pnd</code></td><td>Imported inside <code>run_analysis()</code>. Creates the table, calculates columns, categorizes scores, and counts profiles.</td></tr>
-      <tr><td><code>import matplotlib.pyplot as plt</code></td><td>Imported inside <code>run_analysis()</code>. Saves the chart image.</td></tr>
-    </tbody>
-  </table>
+    <p>
+      The latest version places the heading inside each branch:
+    </p>
 
-  <h3>Constants</h3>
-  <table>
-    <thead><tr><th>Constant</th><th>Role</th></tr></thead>
-    <tbody>
-      <tr><td><code>DEPENDENCIES</code></td><td>Maps required package names to a plain-language purpose, so one loop can check and report them.</td></tr>
-      <tr><td><code>SUBJECT_COUNT = 1000</code></td><td>Defines how many simulated people are generated.</td></tr>
-      <tr><td><code>PROFILE_BINS</code></td><td>Defines numerical boundaries used to classify the awakening score.</td></tr>
-      <tr><td><code>PROFILE_LABELS</code></td><td>Defines the ordered categories: Dormant, Questioning, Aware, Awakened.</td></tr>
-      <tr><td><code>PROFILE_COLORS</code></td><td>Defines the colors used for the profile-count bars.</td></tr>
-    </tbody>
-  </table>
+    <pre><code>MATRIX STATUS: Welcome to the construct
 
-  <h3>Complete flow</h3>
-  <ol>
-    <li><strong>Entry point:</strong> <code>main()</code> starts when <code>loading.py</code> runs directly.</li>
-    <li><strong>Dependency check:</strong> <code>check_dependencies()</code> loops over pandas, NumPy, and matplotlib.</li>
-    <li><strong>Version lookup:</strong> <code>get_package_version()</code> calls <code>metadata.version()</code>. It returns the version string or <code>None</code> when the distribution is missing.</li>
-    <li><strong>Graceful failure:</strong> if any required package is missing, the script prints pip and Poetry installation instructions and ends with <code>sys.exit(1)</code>.</li>
-    <li><strong>Dependency explanation:</strong> it prints the practical distinction between pip and Poetry.</li>
-    <li><strong>Safe imports:</strong> after the checks pass, it imports matplotlib, NumPy, and pandas inside <code>run_analysis()</code>. The <code>try/except ImportError</code> is a second safety layer.</li>
-    <li><strong>Generate Matrix signal:</strong> NumPy produces 1,000 values with a normal distribution centered at 10 and a wide spread of 90. <code>np.clip(..., 0, 100)</code> forces all values into the valid percentage range.</li>
-    <li><strong>Generate resistance rate:</strong> NumPy produces 1,000 uniformly distributed values from 0 up to 100.</li>
-    <li><strong>Create a DataFrame:</strong> pandas stores both arrays as columns in a 1,000-row table.</li>
-    <li><strong>Calculate awakening score:</strong> the script gives Matrix signal 60
+# or
+
+MATRIX STATUS: You're still plugged in</code></pre>
+
+    <p>
+      This is clearer because the status and the branch result are printed
+      together.
+    </p>
+
+    <h2 id="ex1">3. Exercise 1 — loading.py</h2>
+
+    <h3>Purpose</h3>
+
+    <p>
+      The current Exercise 1 simulates 1,000 people connected to the Matrix. It
+      calculates an awakening score from two percentage indicators, assigns each
+      subject a profile, counts the profiles, and saves a bar chart to
+      <code>matrix_analysis.png</code>.
+    </p>
+
+    <h3>Current configuration</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Current value</th>
+          <th>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Required packages</td>
+          <td>NumPy, pandas, matplotlib</td>
+          <td>Simulation, data table and analysis, visualization.</td>
+        </tr>
+        <tr>
+          <td>Subjects</td>
+          <td>1,000</td>
+          <td>Number of simulated people.</td>
+        </tr>
+        <tr>
+          <td>Matrix signal</td>
+          <td>
+            Normal distribution, <code>loc=5</code>, <code>scale=90</code>,
+            clipped to 0–100
+          </td>
+          <td>Widely varying percentage-like signal.</td>
+        </tr>
+        <tr>
+          <td>Resistance rate</td>
+          <td>Uniform distribution from 0 to 100</td>
+          <td>Every range of resistance is equally likely.</td>
+        </tr>
+        <tr>
+          <td>Awakening score</td>
+          <td>60% signal + 40% resistance</td>
+          <td>Combined measure used for classification.</td>
+        </tr>
+        <tr>
+          <td>Profile bins</td>
+          <td>0–30, 30–60, 60–75, 75–100</td>
+          <td>Four awakening categories.</td>
+        </tr>
+        <tr>
+          <td>Chart</td>
+          <td>Profile-count bar chart</td>
+          <td>Shows the number of connected subjects per profile.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Imports and constants</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>sys</code></td>
+          <td>
+            Calls <code>sys.exit(1)</code> when required dependencies are
+            missing.
+          </td>
+        </tr>
+        <tr>
+          <td><code>metadata</code></td>
+          <td>
+            Uses <code>metadata.version()</code> to inspect installed package
+            versions.
+          </td>
+        </tr>
+        <tr>
+          <td><code>Final</code></td>
+          <td>
+            Marks configuration values such as dependencies, count, bins, labels,
+            and colors as constants.
+          </td>
+        </tr>
+        <tr>
+          <td><code>DEPENDENCIES</code></td>
+          <td>
+            Maps package names to their purposes for readable status output.
+          </td>
+        </tr>
+        <tr>
+          <td><code>SUBJECT_COUNT</code></td>
+          <td>Centralizes the value 1,000.</td>
+        </tr>
+        <tr>
+          <td><code>PROFILE_BINS</code></td>
+          <td>Stores the numerical profile boundaries.</td>
+        </tr>
+        <tr>
+          <td><code>PROFILE_LABELS</code></td>
+          <td>
+            Stores <code>Dormant</code>, <code>Questioning</code>,
+            <code>Aware</code>, and <code>Awakened</code>.
+          </td>
+        </tr>
+        <tr>
+          <td><code>PROFILE_COLORS</code></td>
+          <td>Stores the four custom bar colors.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Program flow</h3>
+
+    <ol>
+      <li><code>main()</code> calls <code>check_dependencies()</code>.</li>
+      <li>
+        The dependency checker asks <code>importlib.metadata</code> for the
+        installed version of each required package.
+      </li>
+      <li>
+        If a package is absent, it is added to a list and installation
+        instructions are shown later.
+      </li>
+      <li>
+        <code>show_dependency_management_difference()</code> prints the pip
+        versus Poetry explanation.
+      </li>
+      <li>
+        If the missing-package list is not empty, the program prints help and
+        exits with status 1.
+      </li>
+      <li>
+        Otherwise, <code>run_analysis()</code> imports matplotlib, NumPy, and
+        pandas locally inside a <code>try/except ImportError</code>.
+      </li>
+      <li>
+        NumPy generates 1,000 matrix-signal values. The normal distribution uses
+        <code>loc=5</code> as its center and <code>scale=90</code> as its very
+        wide spread.
+      </li>
+      <li>
+        <code>np.clip(..., 0, 100)</code> forces the signal to remain a valid
+        percentage.
+      </li>
+      <li>
+        NumPy generates 1,000 resistance values uniformly between 0 and 100.
+      </li>
+      <li>
+        pandas creates a DataFrame with both columns.
+      </li>
+      <li>
+        The DataFrame receives an <code>awakening_score</code> column using the
+        weighted formula.
+      </li>
+      <li>
+        <code>pnd.cut()</code> assigns each score to one profile.
+      </li>
+      <li>
+        <code>value_counts(sort=False)</code> counts the subjects while
+        preserving the profile order.
+      </li>
+      <li>The counts are printed and plotted.</li>
+      <li>
+        The chart is formatted, saved as <code>matrix_analysis.png</code>, and
+        closed.
+      </li>
+    </ol>
+
+    <h3>Awakening-score calculation</h3>
+
+    <pre><code>data_frame["awakening_score"] = (
+    data_frame["matrix_signal"] * 0.6
+    + data_frame["resistance_rate"] * 0.4
+)</code></pre>
+
+    <p>This is a weighted average:</p>
+
+    <pre><code>0.6 + 0.4 = 1.0</code></pre>
+
+    <p>
+      Matrix signal has the greater influence because it is the primary simulated
+      indicator of awareness. Resistance rate contributes a smaller but meaningful
+      amount.
+    </p>
+
+    <p>Example:</p>
+
+    <pre><code>matrix_signal = 50
+resistance_rate = 80
+
+awakening_score = 50 × 0.6 + 80 × 0.4
+awakening_score = 62</code></pre>
+
+    <h3>Profile categories</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Score interval</th>
+          <th>Profile</th>
+          <th>Interpretation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>0–30</td>
+          <td>Dormant</td>
+          <td>Little simulated evidence of questioning.</td>
+        </tr>
+        <tr>
+          <td>More than 30–60</td>
+          <td>Questioning</td>
+          <td>Some signs of awareness or resistance.</td>
+        </tr>
+        <tr>
+          <td>More than 60–75</td>
+          <td>Aware</td>
+          <td>Strong signs of seeing the Matrix differently.</td>
+        </tr>
+        <tr>
+          <td>More than 75–100</td>
+          <td>Awakened</td>
+          <td>Highest simulated likelihood of rejecting the Matrix.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      The slightly extended boundaries <code>-0.1</code> and <code>100.1</code>
+      ensure exact 0 and 100 values are included when pandas creates its
+      intervals.
+    </p>
+
+    <h2 id="ex2">4. Exercise 2 — oracle.py</h2>
+
+    <h3>Purpose</h3>
+
+    <p>
+      <code>oracle.py</code> demonstrates configuration management. It loads
+      five settings from the environment and local <code>.env</code> file,
+      checks that they are present and valid, shows local versus production
+      behavior, and reports configuration status without printing private values.
+    </p>
+
+    <h3>Current imports</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Import</th>
+          <th>Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>import os</code></td>
+          <td>
+            Reads variables with <code>os.getenv()</code> and checks
+            <code>.env</code> with <code>os.path.exists()</code>.
+          </td>
+        </tr>
+        <tr>
+          <td><code>import sys</code></td>
+          <td>
+            Stops execution with status 1 when <code>python-dotenv</code> or
+            required configuration is unavailable.
+          </td>
+        </tr>
+        <tr>
+          <td><code>from dotenv import load_dotenv</code></td>
+          <td>
+            Comes from <code>python-dotenv</code> and loads local
+            <code>.env</code> key/value pairs.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Current configuration names</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>MATRIX_MODE</code></td>
+          <td>Must be <code>development</code> or <code>production</code>.</td>
+        </tr>
+        <tr>
+          <td><code>DATABASE_URL</code></td>
+          <td>Database connection configuration.</td>
+        </tr>
+        <tr>
+          <td><code>API_KEY</code></td>
+          <td>Credential for an external service.</td>
+        </tr>
+        <tr>
+          <td><code>LOG_LEVEL</code></td>
+          <td>Logging verbosity setting.</td>
+        </tr>
+        <tr>
+          <td><code>ZION_ENDPOINT</code></td>
+          <td>External network or service endpoint.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Program flow</h3>
+
+    <ol>
+      <li>
+        The program tries to import <code>load_dotenv</code>. If
+        <code>python-dotenv</code> is not installed, it prints the pip
+        requirements command and exits.
+      </li>
+      <li><code>main()</code> prints the Oracle status heading.</li>
+      <li>
+        <code>load_configuration()</code> calls <code>load_dotenv()</code> and
+        then reads all five settings with <code>os.getenv()</code>.
+      </li>
+      <li>
+        The values are returned in one dictionary. Missing values are represented
+        by <code>None</code>.
+      </li>
+      <li>
+        <code>validate_configuration()</code> checks every required name and
+        records missing or empty values in <code>config_issues</code>.
+      </li>
+      <li>
+        It also checks that <code>MATRIX_MODE</code> is exactly
+        <code>development</code> or <code>production</code>.
+      </li>
+      <li>
+        If there are issues, the program prints each one, prints an incomplete
+        configuration status, runs the security check, and exits with code 1.
+      </li>
+      <li>
+        If configuration is valid, <code>print_configuration()</code> prints a
+        compact status report.
+      </li>
+      <li>
+        It reports a local database for development and a production database for
+        production.
+      </li>
+      <li>
+        It reports API access as authenticated when <code>API_KEY</code> exists,
+        but does not print the key.
+      </li>
+      <li>
+        It reports the Zion network as online when
+        <code>ZION_ENDPOINT</code> exists.
+      </li>
+      <li>
+        It reports only <code>Database URL: Configured</code> or
+        <code>Database URL: Missing</code>, avoiding disclosure of the actual
+        connection string.
+      </li>
+      <li>
+        <code>print_security_check()</code> reports whether <code>.env</code>
+        exists and reminds the user that production environment variables can
+        override development values.
+      </li>
+    </ol>
+
+    <h3>What this program does not do</h3>
+
+    <div class="warning">
+      <ul>
+        <li>It does not connect to a real database.</li>
+        <li>It does not contact the API.</li>
+        <li>It does not contact the Zion endpoint.</li>
+        <li>It does not parse a custom configuration format.</li>
+        <li>
+          It does not print or mask the API key; it only checks whether one
+          exists.
+        </li>
+      </ul>
+
+      <p>
+        Those behaviors are intentional. The exercise is about loading and
+        managing configuration securely, not implementing external services.
+      </p>
+    </div>
+
+    <h2 id="concepts">5. Important concepts</h2>
+
+    <h3>Virtual environment</h3>
+
+    <p>
+      A venv is an isolated Python environment with its own interpreter path and
+      package directory. It lets each project install the versions it needs
+      without changing global Python.
+    </p>
+
+    <h3>Dependency</h3>
+
+    <p>
+      A dependency is an external library required by a program. Dependencies are
+      recorded in files so another person can recreate the environment.
+    </p>
+
+    <h3>pip versus Poetry</h3>
+
+    <p>
+      pip installs packages listed in <code>requirements.txt</code> into the
+      current environment. Poetry reads <code>pyproject.toml</code>, resolves
+      compatible versions, and manages a project environment. Pip is simpler;
+      Poetry is more project-oriented.
+    </p>
+
+    <h3>Environment variable</h3>
+
+    <p>
+      An environment variable is a value provided outside the source code, such
+      as <code>API_KEY=...</code>. The same program can receive different values
+      on different machines without changing the Python file.
+    </p>
+
+    <h3>.env loading and precedence</h3>
+
+    <p>
+      <code>load_dotenv()</code> loads local development values. Operating-system
+      environment variables can override those values, which is useful for
+      production deployment. The Python program accesses both through
+      <code>os.getenv()</code>.
+    </p>
+
+    <h3>Secret versus configuration</h3>
+
+    <p>
+      A database URL may be ordinary configuration, but it can also contain a
+      password. An API key is a secret credential. Neither should be hardcoded or
+      exposed in Git. The current Oracle design reports whether values exist
+      without printing the API key or database URL.
+    </p>
+
+    <h3>Validation</h3>
+
+    <p>
+      Loading means retrieving values. Validation means checking whether those
+      values exist and make sense. Oracle validates presence of all five settings
+      and restricts <code>MATRIX_MODE</code> to two accepted values.
+    </p>
+
+    <h3>Type annotations</h3>
+
+    <p>
+      The subject asks for comprehensive annotations checked with mypy. Your
+      functions use annotations such as <code>dict[str, str | None]</code> and
+      <code>list[str]</code>. <code>Final</code> is used in Exercises 0 and 1 as
+      a helpful constant marker, but it is not itself the main requirement.
+    </p>
+
+    <h2 id="testing">6. Testing checklist</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Test</th>
+          <th>Expected result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Run <code>construct.py</code> outside a venv</td>
+          <td>Global-environment warning and venv creation instructions.</td>
+        </tr>
+        <tr>
+          <td>Run <code>construct.py</code> inside a venv</td>
+          <td>Venv name, interpreter path, environment path, and package path.</td>
+        </tr>
+        <tr>
+          <td>Run <code>loading.py</code> without dependencies</td>
+          <td>Missing package list and pip/Poetry installation instructions.</td>
+        </tr>
+        <tr>
+          <td>Run <code>loading.py</code> with pip dependencies</td>
+          <td>Versions, profile counts, and <code>matrix_analysis.png</code>.</td>
+        </tr>
+        <tr>
+          <td>Run <code>loading.py</code> through Poetry</td>
+          <td>
+            <code>poetry install</code> and
+            <code>poetry run python loading.py</code> work.
+          </td>
+        </tr>
+        <tr>
+          <td>Run Oracle without <code>.env</code> or environment variables</td>
+          <td>Missing-variable warnings and exit code 1.</td>
+        </tr>
+        <tr>
+          <td>Run Oracle with complete <code>.env</code></td>
+          <td>Configuration-loaded report and security check.</td>
+        </tr>
+        <tr>
+          <td>Set <code>MATRIX_MODE=production</code> externally</td>
+          <td>Production mode appears instead of development mode.</td>
+        </tr>
+        <tr>
+          <td>Use invalid mode, such as <code>testing</code></td>
+          <td>Invalid-mode warning and safe exit.</td>
+        </tr>
+        <tr>
+          <td>Run Oracle without python-dotenv</td>
+          <td>Dependency warning and installation command.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="qa">7. Evaluation questions and answers</h2>
+
+    <h3>Why are virtual environments useful?</h3>
+
+    <div class="answer">
+      They isolate project dependencies, avoid version conflicts, protect global
+      Python, and make it easier to reproduce a project on another machine.
+    </div>
+
+    <h3>How does construct.py detect a venv?</h3>
+
+    <div class="answer">
+      It compares <code>sys.prefix</code>, the active environment location, with
+      <code>sys.base_prefix</code>, the base Python location. Different values
+      indicate a virtual environment.
+    </div>
+
+    <h3>What does pip do here?</h3>
+
+    <div class="answer">
+      pip installs packages listed in <code>requirements.txt</code> into the
+      currently active Python environment.
+    </div>
+
+    <h3>What does Poetry do here?</h3>
+
+    <div class="answer">
+      Poetry reads <code>pyproject.toml</code>, resolves dependencies, and
+      manages the project environment. The program prints the command needed to
+      install and run through Poetry.
+    </div>
+
+    <h3>
+      Why does loading.py import the external libraries inside run_analysis()?
+    </h3>
+
+    <div class="answer">
+      The program first checks whether the packages are available. Delaying the
+      imports lets it print friendly installation instructions instead of failing
+      immediately at the top of the file.
+    </div>
+
+    <h3>What is the awakening score?</h3>
+
+    <div class="answer">
+      It is a weighted average: 60% Matrix signal plus 40% resistance rate. It
+      combines two percentage indicators into one score used for profile
+      classification.
+    </div>
+
+    <h3>Why clip Matrix signal to 0–100?</h3>
+
+    <div class="answer">
+      The normal distribution can generate values below 0 or above 100. Since the
+      signal is treated as a percentage, <code>np.clip()</code> forces every
+      result into the valid range.
+    </div>
+
+    <h3>What do loc and scale mean?</h3>
+
+    <div class="answer">
+      <code>loc</code> is the center or average of a normal distribution.
+      <code>scale</code> is the standard deviation, which controls spread. A
+      scale of 90 creates a very wide distribution, so clipping is especially
+      important.
+    </div>
+
+    <h3>How are profiles assigned?</h3>
+
+    <div class="answer">
+      pandas <code>cut()</code> places each awakening score into one interval:
+      0–30 Dormant, over 30–60 Questioning, over 60–75 Aware, and over 75–100
+      Awakened.
+    </div>
+
+    <h3>What does oracle.py do?</h3>
+
+    <div class="answer">
+      It loads five configuration values from environment variables and a local
+      .env file, validates them, shows development versus production behavior,
+      and reports status without exposing private values.
+    </div>
+
+    <h3>What happens if a configuration variable is missing?</h3>
+
+    <div class="answer">
+      The variable name is added to <code>config_issues</code>. The program
+      prints every issue, reports that configuration is incomplete, runs the
+      security check, and exits with code 1.
+    </div>
+
+    <h3>Why use python-dotenv?</h3>
+
+    <div class="answer">
+      It loads simple KEY=value entries from .env into the process environment.
+      The assignment specifically requires using this library rather than writing
+      a custom parser.
+    </div>
+
+    <h3>Why should .env not be committed?</h3>
+
+    <div class="answer">
+      It may contain API keys, passwords, or private connection strings.
+      Committing it could expose secrets. .env.example is committed instead, with
+      safe placeholders.
+    </div>
+
+    <h3>Why is .gitignore committed?</h3>
+
+    <div class="answer">
+      The .gitignore file shares the repository’s protection rules with other
+      developers. The real .env is ignored; .env.example and .gitignore
+      themselves are safe project files and should be committed.
+    </div>
+
+    <h3>Does Oracle actually connect to the database or Zion endpoint?</h3>
+
+    <div class="answer">
+      No. It only validates and reports configuration. The exercise is about
+      configuration management, not implementing real external connections.
+    </div>
+
+    <h2 id="review">8. Final review notes</h2>
+
+    <div class="warning">
+      <strong>Verify before submission:</strong>
+
+      <ul>
+        <li>
+          Exercise 2 <code>requirements.txt</code> contains
+          <code>python-dotenv</code>.
+        </li>
+        <li>
+          The real <code>.env</code> is not shown by <code>git status</code>.
+        </li>
+        <li>
+          <code>.env.example</code> contains all five required names and only
+          safe placeholder values.
+        </li>
+        <li><code>.gitignore</code> contains <code>.env</code>.</li>
+        <li>
+          Run all three programs from the directories where their relative files
+          are expected.
+        </li>
+        <li>Run flake8 and mypy according to the project’s setup.</li>
+        <li>
+          Demonstrate both valid and invalid or missing configuration cases for
+          Oracle.
+        </li>
+        <li>
+          Remember that <code>DATABASE_URL</code> can contain credentials in real
+          applications, so reporting only “Configured” is safer than printing its
+          value.
+        </li>
+      </ul>
+    </div>
+
+    <p class="small">
+      You should be able to explain why each tool exists, what happens when something
+      is missing, and how the project keeps environments, dependencies, and
+      configuration separate.
+    </p>
+  </main>
+</body>
+</html>
